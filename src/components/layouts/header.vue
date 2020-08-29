@@ -1,0 +1,19 @@
+<template>
+<vue-menu system fix="r" color="purple" title="Notify" icon="mdi-bell-outline" :count="1">
+    <v-card>
+        <v-card-text>Contents</v-card-text>
+    </v-card>
+</vue-menu>
+</template>
+
+<script>
+export default {
+    components: {
+        "vue-menu": async()=> VueLoader.loadComponent("./components/windows/menu.vue")
+    },
+
+    props: {
+        contents: Array
+    }
+};
+</script>

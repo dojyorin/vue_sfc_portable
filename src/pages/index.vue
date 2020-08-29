@@ -1,0 +1,20 @@
+<template>
+<div>
+    <v-btn @click="notify = true">Notify</v-btn>
+    <vue-notify color="purple" v-model="notify">Contents</vue-notify>
+</div>
+</template>
+
+<script>
+export default {
+    components: {
+        "vue-notify": async()=> VueLoader.loadComponent("./components/windows/notify.vue")
+    },
+
+    data(){
+        return {
+            notify: false
+        };
+    }
+};
+</script>

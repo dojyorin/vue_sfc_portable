@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+        <script>
+            if(/trident\/|edge\//i.test(navigator.userAgent)){
+                alert("Sorry, this page is not compatible with your web browser.");
+                window.stop();
+            }
+        </script>
+
+        <link rel="icon" href="./static/favicon.ico">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@latest/dist/vuetify.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kosugi|M+PLUS+1p&amp;subset=japanese">
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@latest/dist/vue.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue-router@latest/dist/vue-router.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuex@latest/dist/vuex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@latest/dist/vuetify.min.js"></script>
+
+        <script src="https://github.com/dojyorin/vue_loader_standalone/blob/0.0.3/dist/vue_loader.min.js"></script>
+
+        <title>Application</title>
+    </head>
+
+    <body>
+        <div id="vue">
+            <v-app>
+                <v-app-bar app dark :height="height" :color="color">
+                    <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+                    <v-toolbar-title class="pl-4">Application</v-toolbar-title>
+
+                    <v-spacer></v-spacer>
+                    <vue-header></vue-header>
+                </v-app-bar>
+
+                <v-navigation-drawer app temporary v-model="drawer">
+                    <v-toolbar dark absolute width="100%" :height="height" :color="color">
+                        <v-toolbar-title>Menu</v-toolbar-title>
+                        <v-spacer></v-spacer>
+
+                        <v-btn icon @click="drawer = false">
+                            <v-icon large>mdi-close</v-icon>
+                        </v-btn>
+                    </v-toolbar>
+
+                    <vue-drawer :style="`padding-top:${height}px!important;`"></vue-drawer>
+                </v-navigation-drawer>
+
+                <v-main>
+                    <router-view></router-view>
+                </v-main>
+
+                <v-footer>
+                    <vue-footer></vue-footer>
+                </v-footer>
+            </v-app>
+        </div>
+    </body>
+
+    <script>
+        const vue = (async()=>{
+            Vue.use(await VueLoader.loadPlugin("./plugins/savefile.js"));
+
+            const vue_router = {
+                routes: [
+                    ...await VueLoader.loadRouter("./router/index.js")
+                ].map(([route, resource])=>{
+                    return {
+                        path: route,
+                        component: async()=> VueLoader.loadComponent(resource)
+                    };
+                })
+            };
+
+            const vue_store = {
+                ...await VueLoader.loadStore("./store/index.js")
+            };
+
+            return new Vue({
+                el: "#vue",
+
+                vuetify: new Vuetify(),
+                router: new VueRouter(vue_router),
+                store: new Vuex.Store(vue_store),
+
+                components: {
+                    "vue-header": async()=> VueLoader.loadComponent("./components/layouts/header.vue"),
+                    "vue-drawer": async()=> VueLoader.loadComponent("./components/layouts/drawer.vue"),
+                    "vue-footer": async()=> VueLoader.loadComponent("./components/layouts/footer.vue")
+                },
+
+                data(){
+                    return {
+                        height: 52,
+                        color: "blue",
+                        drawer: false
+                    };
+                }
+            });
+        })();
+    </script>
+
+    <style>
+        ::-webkit-scrollbar{
+            display: none !important;
+        }
+        .v-application{
+            font-family: "M PLUS 1p", "Kosugi" !important;
+        }
+        .v-btn{
+            text-transform: none !important;
+        }
+    </style>
+</html>
