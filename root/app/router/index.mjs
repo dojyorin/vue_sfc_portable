@@ -1,6 +1,6 @@
 export const parents = {
     route: "",
-    resource: "./pages"
+    resource: "./app/pages"
 };
 
 export const routes = {

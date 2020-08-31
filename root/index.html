@@ -22,7 +22,7 @@
         <script src="https://cdn.jsdelivr.net/npm/vuex@latest/dist/vuex.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vuetify@latest/dist/vuetify.min.js"></script>
 
-        <script src="https://cdn.jsdelivr.net/gh/dojyorin/vue_loader_standalone@latest/dist/vue_loader.min.js"></script>
+        <script src="./lib/vue_loader.js"></script>
 
         <title>Application</title>
     </head>
@@ -63,9 +63,9 @@
     </body>
 
     <script type="module">
-        import vuePlugins from "./plugins/plugins.mjs"
-        import vueRouter from "./router/router.mjs";
-        import vueStore from "./store/store.mjs";
+        import vuePlugins from "./app/plugins/plugins.mjs"
+        import vueRouter from "./app/router/router.mjs";
+        import vueStore from "./app/store/store.mjs";
 
         Vue.use(vuePlugins);
 
@@ -77,9 +77,9 @@
             store: new Vuex.Store(vueStore),
 
             components: {
-                "vue-header": async()=> VueLoader.loadComponent("./components/layouts/header.vue"),
-                "vue-drawer": async()=> VueLoader.loadComponent("./components/layouts/drawer.vue"),
-                "vue-footer": async()=> VueLoader.loadComponent("./components/layouts/footer.vue")
+                "vue-header": async()=> VueLoader.loadComponent("./app/components/layouts/header.vue"),
+                "vue-drawer": async()=> VueLoader.loadComponent("./app/components/layouts/drawer.vue"),
+                "vue-footer": async()=> VueLoader.loadComponent("./app/components/layouts/footer.vue")
             },
 
             data(){

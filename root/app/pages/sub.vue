@@ -12,7 +12,7 @@
 <script>
 export default {
     components: {
-        "vue-dialog": async()=> VueLoader.loadComponent("./components/windows/dialog.vue")
+        "vue-dialog": async()=> VueLoader.loadComponent("./app/components/windows/dialog.vue")
     },
 
     data(){
