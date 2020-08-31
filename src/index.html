@@ -6,7 +6,7 @@
 
         <script>
             if(/trident\/|edge\//i.test(navigator.userAgent)){
-                alert("Sorry, this page is not compatible with your web browser.");
+                alert("This page is not compatible with your web browser.");
                 window.stop();
             }
         </script>
@@ -62,47 +62,34 @@
         </div>
     </body>
 
-    <script>
-        const vue = (async()=>{
-            Vue.use(await VueLoader.loadPlugin("./plugins/savefile.js"));
+    <script type="module">
+        import vuePlugins from "./plugins/plugins.mjs"
+        import vueRouter from "./router/router.mjs";
+        import vueStore from "./store/store.mjs";
 
-            const vue_router = {
-                routes: [
-                    ...await VueLoader.loadRouter("./router/index.js")
-                ].map(([route, resource])=>{
-                    return {
-                        path: route,
-                        component: async()=> VueLoader.loadComponent(resource)
-                    };
-                })
-            };
+        Vue.use(vuePlugins);
 
-            const vue_store = {
-                ...await VueLoader.loadStore("./store/index.js")
-            };
+        const vue = new Vue({
+            el: "#vue",
 
-            return new Vue({
-                el: "#vue",
+            vuetify: new Vuetify(),
+            router: new VueRouter(vueRouter),
+            store: new Vuex.Store(vueStore),
 
-                vuetify: new Vuetify(),
-                router: new VueRouter(vue_router),
-                store: new Vuex.Store(vue_store),
+            components: {
+                "vue-header": async()=> VueLoader.loadComponent("./components/layouts/header.vue"),
+                "vue-drawer": async()=> VueLoader.loadComponent("./components/layouts/drawer.vue"),
+                "vue-footer": async()=> VueLoader.loadComponent("./components/layouts/footer.vue")
+            },
 
-                components: {
-                    "vue-header": async()=> VueLoader.loadComponent("./components/layouts/header.vue"),
-                    "vue-drawer": async()=> VueLoader.loadComponent("./components/layouts/drawer.vue"),
-                    "vue-footer": async()=> VueLoader.loadComponent("./components/layouts/footer.vue")
-                },
-
-                data(){
-                    return {
-                        height: 52,
-                        color: "blue",
-                        drawer: false
-                    };
-                }
-            });
-        })();
+            data(){
+                return {
+                    height: 52,
+                    color: "blue",
+                    drawer: false
+                };
+            }
+        });
     </script>
 
     <style>
