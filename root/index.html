@@ -22,6 +22,7 @@
         <script src="https://cdn.jsdelivr.net/npm/vuex@latest/dist/vuex.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vuetify@latest/dist/vuetify.min.js"></script>
 
+        <script src="./lib/http_get.js"></script>
         <script src="./lib/vue_loader.js"></script>
 
         <title>Application</title>
@@ -30,7 +31,7 @@
     <body>
         <div id="vue">
             <v-app>
-                <v-app-bar app dark :height="height" :color="color">
+                <v-app-bar app dark :height="52" color="blue">
                     <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
                     <v-toolbar-title class="pl-4">Application</v-toolbar-title>
 
@@ -39,7 +40,7 @@
                 </v-app-bar>
 
                 <v-navigation-drawer app temporary v-model="drawer">
-                    <v-toolbar dark absolute width="100%" :height="height" :color="color">
+                    <v-toolbar dark absolute width="100%" :height="$vuetify.application.top" color="blue">
                         <v-toolbar-title>Menu</v-toolbar-title>
                         <v-spacer></v-spacer>
 
@@ -48,7 +49,7 @@
                         </v-btn>
                     </v-toolbar>
 
-                    <vue-drawer :style="`padding-top:${height}px!important;`"></vue-drawer>
+                    <vue-drawer :style="`padding-top:${$vuetify.application.top}px!important;`"></vue-drawer>
                 </v-navigation-drawer>
 
                 <v-main>
@@ -77,15 +78,13 @@
             store: new Vuex.Store(vueStore),
 
             components: {
-                "vue-header": async()=> VueLoader.loadComponent("./app/components/layouts/header.vue"),
-                "vue-drawer": async()=> VueLoader.loadComponent("./app/components/layouts/drawer.vue"),
-                "vue-footer": async()=> VueLoader.loadComponent("./app/components/layouts/footer.vue")
+                "vue-header": ()=> $vueLoader("./app/components/layouts/header.vue"),
+                "vue-drawer": ()=> $vueLoader("./app/components/layouts/drawer.vue"),
+                "vue-footer": ()=> $vueLoader("./app/components/layouts/footer.vue")
             },
 
             data(){
                 return {
-                    height: 52,
-                    color: "blue",
                     drawer: false
                 };
             }

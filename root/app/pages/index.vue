@@ -8,7 +8,7 @@
 <script>
 export default {
     components: {
-        "vue-notify": async()=> VueLoader.loadComponent("./app/components/windows/notify.vue")
+        "vue-notify": ()=> $vueLoader("./app/components/windows/notify.vue")
     },
 
     data(){

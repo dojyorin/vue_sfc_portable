@@ -1,5 +1,5 @@
 import index from "./index.mjs";
-import sub from "./sub.mjs";
+import sub from "./main.mjs";
 
 const list = [
     index,
@@ -10,7 +10,7 @@ const routes = list.flatMap(({parents, routes})=>{
     return Object.entries(routes ?? {}).map(([route, resource])=>{
         return {
             path: (parents?.route ?? "") + route,
-            component: async()=> VueLoader.loadComponent((parents?.resource ?? "") + resource)
+            component: ()=> $vueLoader((parents?.resource ?? "") + resource)
         };
     });
 });

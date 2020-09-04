@@ -9,7 +9,7 @@
 <script>
 export default {
     components: {
-        "vue-menu": async()=> VueLoader.loadComponent("./app/components/windows/menu.vue")
+        "vue-menu": ()=> $vueLoader("./app/components/windows/menu.vue")
     },
 
     props: {
