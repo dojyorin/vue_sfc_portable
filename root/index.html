@@ -31,7 +31,7 @@
     <body>
         <div id="vue">
             <v-app>
-                <v-app-bar app dark :height="52" color="blue">
+                <v-app-bar app dark color="blue" :height="52">
                     <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
                     <v-toolbar-title class="pl-4">Application</v-toolbar-title>
 
@@ -40,7 +40,7 @@
                 </v-app-bar>
 
                 <v-navigation-drawer app temporary v-model="drawer">
-                    <v-toolbar dark absolute width="100%" color="blue" :height="$vuetify.application.top">
+                    <v-toolbar dark absolute color="blue" width="100%" :height="$vuetify.application.top">
                         <v-toolbar-title>Menu</v-toolbar-title>
                         <v-spacer></v-spacer>
 
