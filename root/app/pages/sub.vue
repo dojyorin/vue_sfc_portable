@@ -1,7 +1,7 @@
 <template>
 <div>
     <v-btn @click="dialog = true">Dialog</v-btn>
-    <vue-dialog color="purple" title="Dialog" icon="mdi-information-outline" v-model="dialog">
+    <vue-dialog maximize color="purple" title="Dialog" icon="mdi-information-outline" v-model="dialog">
         <v-card>
             <v-card-text>Contents</v-card-text>
         </v-card>

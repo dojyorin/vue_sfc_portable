@@ -1,5 +1,5 @@
 <template>
-<v-dialog persistent scrollable :fullscreen="full" :value="value">
+<v-dialog persistent scrollable :width="width" :fullscreen="full" :value="value">
     <v-card :tile="full">
         <v-system-bar window dark :color="color">
             <v-icon>{{icon}}</v-icon>
@@ -7,7 +7,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn icon tile @click="full = !full">
+            <v-btn v-if="maximize" icon tile @click="full = !full">
                 <v-icon v-if="full" class="mr-0">mdi-window-restore</v-icon>
                 <v-icon v-else class="mr-0">mdi-window-maximize</v-icon>
             </v-btn>
@@ -30,7 +30,9 @@ export default {
         value: Boolean,
         title: String,
         color: String,
-        icon: String
+        icon: String,
+        width: Number,
+        maximize: Boolean
     },
     data(){
         return {
