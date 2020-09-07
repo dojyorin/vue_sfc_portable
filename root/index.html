@@ -7,7 +7,7 @@
         <script>
             if(/trident\/|edge\//i.test(navigator.userAgent)){
                 alert("This page is not compatible with your web browser.");
-                window.stop();
+                document.execCommand("stop");
             }
         </script>
 
