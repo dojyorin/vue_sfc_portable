@@ -32,7 +32,7 @@
 </template>
 
 <script>
-export default {
+return {
     components: {
         "vue-header": ()=> $vueLoader("./app/components/layouts/header.vue"),
         "vue-drawer": ()=> $vueLoader("./app/components/layouts/drawer.vue"),

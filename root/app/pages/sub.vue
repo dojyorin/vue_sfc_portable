@@ -10,7 +10,7 @@
 </template>
 
 <script>
-export default {
+return {
     components: {
         "vue-dialog": ()=> $vueLoader("./app/components/windows/dialog.vue")
     },

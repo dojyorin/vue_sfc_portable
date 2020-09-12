@@ -6,7 +6,7 @@
 </template>
 
 <script>
-export default {
+return {
     components: {
         "vue-notify": ()=> $vueLoader("./app/components/windows/notify.vue")
     },

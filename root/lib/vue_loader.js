@@ -12,10 +12,6 @@
         return doc.trim().replace(start, "").replace(end, "").trim();
     }
 
-    function returnExport(script){
-        return new Function(script.trim().replace(/^\s*?export\s+?default/i, "return"))() || {};
-    }
-
     Object.defineProperty(globalThis, "$vueLoader", {
         writable: false,
         configurable: false,
@@ -53,7 +49,7 @@
 
             return {
                 template: templateScoped || templateBody,
-                mixins: [returnExport(scriptBody) || {}]
+                mixins: [new Function(scriptBody)() || {}]
             };
         }
     });

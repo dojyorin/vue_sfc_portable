@@ -22,7 +22,7 @@
 </template>
 
 <script>
-export default {
+return {
     props: {
         value: Boolean,
         title: String,
