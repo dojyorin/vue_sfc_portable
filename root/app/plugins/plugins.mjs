@@ -1,17 +1,19 @@
 import saveFile from "./save_file.mjs";
 import imageLoader from "./image_loader.mjs";
+import unixDate from "./unix_date.mjs";
 
 const list = [
     saveFile,
-    imageLoader
+    imageLoader,
+    unixDate
 ];
 
-const plugins = {
-    install(Vue){
-        for(const plugin of list){
-            Vue.prototype[`$${plugin.name}`] = plugin;
-        }
+function install(ctx){
+    for(const plugin of list){
+        ctx.prototype[`$$${plugin.name}`] = plugin;
     }
-};
+}
 
-export default plugins;
+export default {
+    install
+};
