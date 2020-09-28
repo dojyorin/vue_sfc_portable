@@ -12,7 +12,7 @@
 <script>
 return {
     components: {
-        "vue-dialog": ()=> $vueLoader("./app/components/windows/dialog.vue")
+        "vue-dialog": ()=> $vueLoader("./application/components/windows/dialog.vue")
     },
 
     data(){

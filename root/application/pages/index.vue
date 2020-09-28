@@ -8,7 +8,7 @@
 <script>
 return {
     components: {
-        "vue-notify": ()=> $vueLoader("./app/components/windows/notify.vue")
+        "vue-notify": ()=> $vueLoader("./application/components/windows/notify.vue")
     },
 
     data(){
