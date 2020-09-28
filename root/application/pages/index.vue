@@ -1,8 +1,8 @@
 <template>
-<div>
+<v-container fluid>
     <v-btn @click="notify = true">Notify</v-btn>
     <vue-notify color="purple" v-model="notify">Contents</vue-notify>
-</div>
+</v-container>
 </template>
 
 <script>

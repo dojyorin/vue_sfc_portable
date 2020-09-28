@@ -1,13 +1,11 @@
-export const parent = {
-    route: "",
-    resource: "./application/pages"
-};
-
-export const paths = {
-    "/sub": "/sub.vue"
-};
-
 export default {
-    parent,
-    paths
+    parent: {
+        route: "",
+        resource: "./application/pages"
+    },
+
+    paths: {
+        "/sub": "/sub.vue",
+        "/worker": "/worker.vue"
+    }
 };

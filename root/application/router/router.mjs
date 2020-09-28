@@ -8,10 +8,10 @@ const routes = [
 
 export default {
     routes: routes.flatMap(({parent, paths})=>{
-        return Object.entries(paths ?? {}).map(([route, resource])=>{
+        return Object.entries(paths).map(([route, resource])=>{
             return {
-                path: (parent?.route ?? "") + route,
-                component: ()=> $vueLoader((parent?.resource ?? "") + resource)
+                path: parent.route + route,
+                component: ()=> $vueLoader(parent.resource + resource)
             };
         });
     })

@@ -30,6 +30,10 @@ return {
                 title: "Sub",
                 to: "/sub",
                 icon: "mdi-account-circle"
+            }, {
+                title: "Worker",
+                to: "/worker",
+                icon: "mdi-memory"
             }]
         };
     }
