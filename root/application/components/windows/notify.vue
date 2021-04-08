@@ -13,7 +13,7 @@
 </template>
 
 <script>
-return {
+export default {
     props: {
         value: Boolean,
         color: String

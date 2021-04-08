@@ -7,9 +7,9 @@
 </template>
 
 <script>
-return {
+export default {
     components: {
-        "vue-menu": ()=> $vueLoader("./application/components/windows/menu.vue")
+        "vue-menu": () => $vueLoader("./application/components/windows/menu.vue")
     },
 
     props: {

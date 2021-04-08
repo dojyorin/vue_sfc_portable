@@ -10,9 +10,9 @@
 </template>
 
 <script>
-return {
+export default {
     components: {
-        "vue-dialog": ()=> $vueLoader("./application/components/windows/dialog.vue")
+        "vue-dialog": () => $vueLoader("./application/components/windows/dialog.vue")
     },
 
     data(){

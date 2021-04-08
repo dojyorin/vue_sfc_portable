@@ -10,9 +10,9 @@
                 cache: "no-cache",
                 credential: "omit",
                 referrerPolicy: "no-referrer",
+                referrer: "",
                 redirect: "follow",
                 keepalive: false,
-                referrer: "",
                 integrity: "",
                 headers: {},
                 body: null

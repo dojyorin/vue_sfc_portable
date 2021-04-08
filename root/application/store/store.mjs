@@ -1,9 +1,17 @@
-import index from "./index.mjs";
-import user from "./user.mjs";
+import store0 from "./index.mjs";
+import store1 from "./user.mjs";
+
+const stores = [
+    store1
+];
 
 export default {
-    modules: {
-        "": index,
-        "user": user
-    }
+    ...store0,
+    modules: stores.reduce((ctx, store)=>{
+        const {name} = store;
+        delete store.name;
+        return Object.defineProperty(ctx, name, {
+            value: store
+        });
+    }, {})
 };

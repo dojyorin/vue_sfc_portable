@@ -15,7 +15,7 @@
 </template>
 
 <script>
-return {
+export default {
     props: {
         contents: Array
     },

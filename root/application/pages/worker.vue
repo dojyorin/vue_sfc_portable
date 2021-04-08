@@ -5,7 +5,7 @@
 </template>
 
 <script>
-return {
+export default {
     methods: {
         echo(){
             const worker = new Worker("./worker/echo.js");

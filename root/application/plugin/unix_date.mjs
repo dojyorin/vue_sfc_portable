@@ -4,5 +4,6 @@ export default function unixDate(time){
     }
 
     const date = new Date(time * 1000);
+
     return `${date.getFullYear()}/${pad(date.getMonth() + 1)}/${pad(date.getDate())}`;
 }

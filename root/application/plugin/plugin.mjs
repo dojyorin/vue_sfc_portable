@@ -1,11 +1,11 @@
-import saveFile from "./save_file.mjs";
-import imageLoader from "./image_loader.mjs";
-import unixDate from "./unix_date.mjs";
+import plugin0 from "./save_file.mjs";
+import plugin1 from "./image_loader.mjs";
+import plugin2 from "./unix_date.mjs";
 
 const plugins = [
-    saveFile,
-    imageLoader,
-    unixDate
+    plugin0,
+    plugin1,
+    plugin2
 ];
 
 export default {

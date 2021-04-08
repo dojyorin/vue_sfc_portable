@@ -32,11 +32,11 @@
 </template>
 
 <script>
-return {
+export default {
     components: {
-        "vue-header": ()=> $vueLoader("./application/components/layouts/header.vue"),
-        "vue-drawer": ()=> $vueLoader("./application/components/layouts/drawer.vue"),
-        "vue-footer": ()=> $vueLoader("./application/components/layouts/footer.vue")
+        "vue-header": () => $vueLoader("./application/components/layouts/header.vue"),
+        "vue-drawer": () => $vueLoader("./application/components/layouts/drawer.vue"),
+        "vue-footer": () => $vueLoader("./application/components/layouts/footer.vue")
     },
 
     data(){

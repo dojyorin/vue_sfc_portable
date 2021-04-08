@@ -1,9 +1,9 @@
-import index from "./index.mjs";
-import main from "./main.mjs";
+import route0 from "./index.mjs";
+import route1 from "./main.mjs";
 
 const routes = [
-    index,
-    main
+    route0,
+    route1
 ];
 
 export default {

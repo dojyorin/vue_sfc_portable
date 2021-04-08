@@ -25,7 +25,7 @@
 </template>
 
 <script>
-return {
+export default {
     props: {
         value: Boolean,
         title: String,

@@ -6,9 +6,9 @@
 </template>
 
 <script>
-return {
+export default {
     components: {
-        "vue-notify": ()=> $vueLoader("./application/components/windows/notify.vue")
+        "vue-notify": () => $vueLoader("./application/components/windows/notify.vue")
     },
 
     data(){

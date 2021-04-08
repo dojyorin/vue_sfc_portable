@@ -7,7 +7,7 @@
 
     function getContent(doc, tag){
         const start = new RegExp(`^<${tag}.*?>`, "is");
-        const end = new RegExp(`</${tag}>$`, "is");
+        const end = new RegExp(`</${tag}>$`, "i");
 
         return doc.trim().replace(start, "").replace(end, "").trim();
     }
@@ -21,10 +21,8 @@
 
             const template = getComponent(response, "template");
             const templateBody = getContent(template, "template");
-
             const script = getComponent(response, "script");
             const scriptBody = getContent(script, "script");
-
             const style = getComponent(response, "style");
             const styleBody = getContent(style, "style");
 
@@ -47,7 +45,7 @@
 
             return {
                 template: templateScoped || templateBody,
-                extends: new Function(scriptBody)() || {}
+                extends: new Function(scriptBody.replace(/^\s*?export\s+?default\s*/is, "return"))() || {}
             };
         }
     });
