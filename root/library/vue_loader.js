@@ -13,11 +13,13 @@
     }
 
     Object.defineProperty(globalThis, "$vueLoader", {
-        writable: false,
-        configurable: false,
         enumerable: false,
-        async value(path){
-            const response = await $httpGet(path, "text");
+        configurable: false,
+        writable: false,
+        async value(url){
+            const response = await $fetchEx(url, {
+                type: "text"
+            });
 
             const template = getComponent(response, "template");
             const templateBody = getContent(template, "template");

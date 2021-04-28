@@ -23,7 +23,7 @@ export default {
     },
 
     async mounted(){
-        const db = await $httpGet("./data/database.json", "json");
+        const db = await $fetchEx("./data/database.json");
         this.count = db.length;
     }
 };
