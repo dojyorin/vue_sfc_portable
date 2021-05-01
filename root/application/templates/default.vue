@@ -25,7 +25,7 @@
         <router-view></router-view>
     </v-main>
 
-    <v-footer>
+    <v-footer app dark tile padless color="blue">
         <vue-footer></vue-footer>
     </v-footer>
 </v-app>

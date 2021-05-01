@@ -1,5 +1,5 @@
 <template>
-<v-row justify="center" align="center">
+<v-row no-gutters justify="center">
     Copyright
 </v-row>
 </template>
