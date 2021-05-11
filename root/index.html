@@ -34,22 +34,61 @@
     </body>
 
     <script async type="module">
-        import vuePlugin from "./application/plugin/plugin.mjs";
-        import vueRouter from "./application/router/router.mjs";
-        import vueStore from "./application/store/store.mjs";
+        function importEx(path, names){
+            return Promise.all(names.map(async name => [name, (await import(`${path}/${name}.mjs`)).default]));
+        }
 
-        Vue.use(vuePlugin);
+        const plugins = await importEx("./application/plugins", [
+            "writeFile",
+            "dateUnix"
+        ]);
+
+        const routes = await importEx("./application/routes", [
+            "main"
+        ]);
+
+        const stores = await importEx("./application/stores", [
+            "main"
+        ]);
+
+        Vue.use({
+            install(ctx){
+                for(const [name, plugin] of plugins){
+                    ctx.prototype[`$$${name}`] = plugin;
+                }
+            }
+        });
 
         const vue = new Vue({
             el: "#vue",
 
-            vuetify: new Vuetify(),
-            router: new VueRouter(vueRouter),
-            store: new Vuex.Store(vueStore),
-
             components: {
                 "vue": () => $vueLoader("./application/templates/default.vue")
-            }
+            },
+
+            vuetify: new Vuetify(),
+
+            router: new VueRouter({
+                routes: routes.flatMap(([_, {parent, paths}])=>{
+                    return Object.entries(paths).map(([route, resource])=>{
+                        return {
+                            path: parent.route + route,
+                            component: () => $vueLoader(parent.resource + resource)
+                        };
+                    });
+                })
+            }),
+
+            store: new Vuex.Store({
+                ...stores.shift()[1],
+                modules: stores.reduce((ctx, [name, store])=>{
+                    ctx[name] = {
+                        ...store,
+                        namespaced: true
+                    };
+                    return ctx;
+                }, {})
+            })
         });
     </script>
 

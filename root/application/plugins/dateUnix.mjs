@@ -1,4 +1,4 @@
-export default function unixDate(time){
+export default (time)=>{
     function pad(number){
         return String(number).padStart(2, "0");
     }
