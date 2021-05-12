@@ -1,9 +1,8 @@
 <template>
-<div>
 <v-list>
     <v-subheader>List</v-subheader>
 
-    <v-list-item @click="dialog = true">
+    <v-list-item>
         <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
         </v-list-item-icon>
@@ -12,21 +11,28 @@
             <v-list-item-title>Dialog</v-list-item-title>
             <v-list-item-subtitle>Subtitle</v-list-item-subtitle>
         </v-list-item-content>
+
+        <v-list-item-action>
+            <vue-dialog persistent maximize color="purple" title="Dialog" icon="mdi-information-outline" v-model="dialog">
+                <template #activator>
+                    <v-btn icon @click.stop="dialog = true">
+                        <v-icon>mdi-information-outline</v-icon>
+                    </v-btn>
+                </template>
+
+                <v-card>
+                    <v-card-text>Contents</v-card-text>
+                </v-card>
+            </vue-dialog>
+        </v-list-item-action>
     </v-list-item>
 </v-list>
-
-<vue-dialog maximize color="purple" title="Dialog" icon="mdi-information-outline" v-model="dialog">
-    <v-card>
-        <v-card-text>Contents</v-card-text>
-    </v-card>
-</vue-dialog>
-</div>
 </template>
 
 <script>
 export default {
     components: {
-        "vue-dialog": () => $vueLoader("./application/components/windows/dialog.vue")
+        "vue-dialog": () => $vueLoader("./application/components/dialog.vue")
     },
 
     data(){

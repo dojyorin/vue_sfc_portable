@@ -1,48 +1,34 @@
 <template>
 <v-app>
-    <v-app-bar app dark color="blue" :height="52">
-        <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-        <v-toolbar-title class="pl-4">Application</v-toolbar-title>
+    <vue-header :color="color" :drawer.sync="drawer"></vue-header>
+    <vue-drawer :color="color" v-model="drawer"></vue-drawer>
 
-        <v-spacer></v-spacer>
-        <vue-header></vue-header>
-    </v-app-bar>
-
-    <v-navigation-drawer app temporary v-model="drawer">
-        <v-toolbar dark absolute color="blue" width="100%" :height="$vuetify.application.top">
-            <v-toolbar-title>Menu</v-toolbar-title>
-            <v-spacer></v-spacer>
-
-            <v-btn icon @click="drawer = false">
-                <v-icon large>mdi-close</v-icon>
-            </v-btn>
-        </v-toolbar>
-
-        <vue-drawer :style="`padding-top:${$vuetify.application.top}px!important;`"></vue-drawer>
-    </v-navigation-drawer>
+    <template v-for="notify in $store.getters.getNotifies">
+        <vue-notify :color="notify.color" :key="notify.token">{{notify.message}}</vue-notify>
+    </template>
 
     <v-main>
         <router-view></router-view>
     </v-main>
 
-    <v-footer app dark tile padless color="blue">
-        <vue-footer></vue-footer>
-    </v-footer>
+    <vue-footer :color="color"></vue-footer>
 </v-app>
 </template>
 
 <script>
 export default {
     components: {
-        "vue-header": () => $vueLoader("./application/components/layouts/header.vue"),
-        "vue-drawer": () => $vueLoader("./application/components/layouts/drawer.vue"),
-        "vue-footer": () => $vueLoader("./application/components/layouts/footer.vue")
+        "vue-header": () => $vueLoader("./application/layouts/header.vue"),
+        "vue-footer": () => $vueLoader("./application/layouts/footer.vue"),
+        "vue-drawer": () => $vueLoader("./application/layouts/drawer.vue"),
+        "vue-notify": () => $vueLoader("./application/components/notify.vue")
     },
 
     data(){
         return {
+            color: "blue",
             drawer: false
         };
     }
-}
+};
 </script>

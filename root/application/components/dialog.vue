@@ -1,8 +1,12 @@
 <template>
-<v-dialog persistent scrollable :width="width" :fullscreen="full" :value="value">
-    <v-card :tile="full">
+<v-dialog scrollable :persistent="persistent" :fullscreen="full" :width="width" :value="value">
+    <template #activator="bridge">
+        <slot name="activator" v-bind="bridge"></slot>
+    </template>
+
+    <v-card :flat="full" :tile="full">
         <v-system-bar window dark :color="color">
-            <v-icon>{{icon}}</v-icon>
+            <v-icon left>{{icon}}</v-icon>
             <span>{{title}}</span>
 
             <v-spacer></v-spacer>
@@ -12,7 +16,7 @@
                 <v-icon v-else class="mr-0">mdi-window-maximize</v-icon>
             </v-btn>
 
-            <v-btn icon tile @click="$emit('input')">
+            <v-btn icon tile @click="$emit('input', false)">
                 <v-icon class="mr-0">mdi-window-close</v-icon>
             </v-btn>
         </v-system-bar>
@@ -32,8 +36,10 @@ export default {
         color: String,
         icon: String,
         width: Number,
+        persistent: Boolean,
         maximize: Boolean
     },
+
     data(){
         return {
             full: false
