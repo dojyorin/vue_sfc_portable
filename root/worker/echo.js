@@ -1,4 +1,4 @@
-self.addEventListener("message", ({data})=>{
+globalThis.addEventListener("message", ({data})=>{
     console.log(`Worker: ${data}`);
-    self.postMessage(data);
+    globalThis.postMessage(data);
 });
