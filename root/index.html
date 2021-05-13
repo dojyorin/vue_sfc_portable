@@ -69,11 +69,11 @@
             vuetify: new Vuetify(),
 
             router: new VueRouter({
-                routes: routes.flatMap(([_, {parent, paths}])=>{
-                    return Object.entries(paths).map(([route, resource])=>{
+                routes: routes.flatMap(([_, path])=>{
+                    return Object.entries(path).map(([virtual, physical])=>{
                         return {
-                            path: parent.route + route,
-                            component: () => $vueLoader(parent.resource + resource)
+                            path: virtual,
+                            component: () => $vueLoader(`./application/pages/${physical}`)
                         };
                     });
                 })

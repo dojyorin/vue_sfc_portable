@@ -1,13 +1,6 @@
 export default {
-    parent: {
-        route: "",
-        resource: "./application/pages"
-    },
-
-    paths: {
-        "*": "/404.vue",
-        "/": "/index.vue",
-        "/sub": "/sub.vue",
-        "/worker": "/worker.vue"
-    }
+    "*": "./404.vue",
+    "/": "./index.vue",
+    "/sub": "./sub.vue",
+    "/worker": "./worker.vue"
 };
