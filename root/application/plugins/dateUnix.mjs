@@ -1,6 +1,6 @@
 export default (time)=>{
-    function pad(number){
-        return String(number).padStart(2, "0");
+    function pad(n){
+        return n.toString().padStart(2, "0");
     }
 
     const date = new Date(time * 1000);
