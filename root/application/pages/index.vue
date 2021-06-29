@@ -9,7 +9,7 @@
                 <v-card-text>Example</v-card-text>
 
                 <v-card-actions>
-                    <v-btn dark color="purple" @click="dispatchNotify()">Notify</v-btn>
+                    <v-btn dark :color="$store.state.ui.colorSub" @click="dispatchNotify()">Notify</v-btn>
                 </v-card-actions>
             </v-card>
         </v-col>
@@ -21,9 +21,9 @@
 export default {
     methods: {
         dispatchNotify(){
-            this.$store.dispatch("vNotify", {
+            this.$store.dispatch("ui/vNotify", {
                 message: "Test",
-                color: "info"
+                color: "success"
             });
         }
     }

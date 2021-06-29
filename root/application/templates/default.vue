@@ -1,17 +1,16 @@
 <template>
 <v-app>
-    <vue-header :color="color" :drawer.sync="drawer"></vue-header>
-    <vue-drawer :color="color" v-model="drawer"></vue-drawer>
+    <vue-loading></vue-loading>
+    <vue-notify></vue-notify>
 
-    <template v-for="notify in $store.getters.getNotifies">
-        <vue-notify :color="notify.color" :key="notify.token">{{notify.message}}</vue-notify>
-    </template>
+    <vue-header></vue-header>
+    <vue-drawer></vue-drawer>
 
     <v-main>
         <router-view></router-view>
     </v-main>
 
-    <vue-footer :color="color"></vue-footer>
+    <vue-footer></vue-footer>
 </v-app>
 </template>
 
@@ -21,14 +20,8 @@ export default {
         "vue-header": () => $vueLoader("./application/layouts/header.vue"),
         "vue-footer": () => $vueLoader("./application/layouts/footer.vue"),
         "vue-drawer": () => $vueLoader("./application/layouts/drawer.vue"),
-        "vue-notify": () => $vueLoader("./application/components/notify.vue")
-    },
-
-    data(){
-        return {
-            color: "blue",
-            drawer: false
-        };
+        "vue-loading": () => $vueLoader("./application/layouts/loading.vue"),
+        "vue-notify": () => $vueLoader("./application/layouts/notify.vue")
     }
 };
 </script>

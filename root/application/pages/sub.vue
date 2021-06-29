@@ -13,7 +13,7 @@
         </v-list-item-content>
 
         <v-list-item-action>
-            <vue-dialog persistent maximize color="purple" title="Dialog" icon="mdi-information-outline" v-model="dialog">
+            <vue-dialog persistent maximize :color="$store.state.ui.colorSub" title="Dialog" icon="mdi-information-outline" v-model="dialog">
                 <template #activator>
                     <v-btn icon @click.stop="dialog = true">
                         <v-icon>mdi-information-outline</v-icon>
@@ -39,6 +39,12 @@ export default {
         return {
             dialog: false
         };
+    },
+
+    async mounted(){
+        this.$store.dispatch("ui/vLoading", true);
+        await new Promise(res => setTimeout(res, 1000));
+        this.$store.dispatch("ui/vLoading", false);
     }
 };
 </script>

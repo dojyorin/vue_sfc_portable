@@ -1,7 +1,7 @@
 <template>
-<v-navigation-drawer app temporary :value="value">
-    <v-toolbar dark :color="color" :height="$vuetify.application.top">
-        <v-btn icon @click="$emit('input', false)">
+<v-navigation-drawer app temporary v-model="$store.state.ui.drawer">
+    <v-toolbar dark :color="$store.state.ui.colorMain" :height="$vuetify.application.top">
+        <v-btn icon @click="$store.dispatch('ui/vDrawer', false)">
             <v-icon large>mdi-close</v-icon>
         </v-btn>
 
@@ -26,11 +26,6 @@
 
 <script>
 export default {
-    props: {
-        value: Boolean,
-        color: String
-    },
-
     data(){
         return {
             pages: [{

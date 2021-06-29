@@ -43,11 +43,13 @@
         ]);
 
         const routes = await importEx("./application/routes", [
-            "main"
+            "main",
+            "page"
         ]);
 
         const stores = await importEx("./application/stores", [
-            "main"
+            "main",
+            "ui"
         ]);
 
         Vue.use({
@@ -60,12 +62,11 @@
 
         const vue = new Vue({
             el: "#vue",
+            vuetify: new Vuetify(),
 
             components: {
                 "vue": () => $vueLoader("./application/templates/default.vue")
             },
-
-            vuetify: new Vuetify(),
 
             router: new VueRouter({
                 routes: routes.flatMap(([_, path])=>{
@@ -79,7 +80,7 @@
             }),
 
             store: new Vuex.Store({
-                ...stores.shift()[1],
+                ...stores.shift().pop(),
                 modules: stores.reduce((ctx, [name, store])=>{
                     ctx[name] = {
                         ...store,
