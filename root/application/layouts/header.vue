@@ -34,7 +34,7 @@ export default {
     },
 
     async mounted(){
-        const db = await $fetchEx("./media/data.json");
+        const db = await $fetch("./media/data.json");
         this.count = db.length;
     }
 }

@@ -1,4 +1,4 @@
-Object.defineProperty(globalThis, "$fetchEx", {
+Object.defineProperty(globalThis, "$fetch", {
     enumerable: false,
     configurable: false,
     writable: false,
