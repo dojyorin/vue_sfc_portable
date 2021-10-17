@@ -36,27 +36,27 @@
     </body>
 
     <script async type="module">
-        function importEx(path, names){
+        function importModule(path, names){
             return Promise.all(names.map(async name => [name, (await import(`${path}/${name}.mjs`)).default]));
         }
 
-        const plugins = await importEx("./application/plugins", [
+        const vuePlugins = await importModule("./application/plugins", [
             "dateUnix"
         ]);
 
-        const routes = await importEx("./application/routes", [
+        const vueRoutes = await importModule("./application/routes", [
             "main",
             "page"
         ]);
 
-        const stores = await importEx("./application/stores", [
+        const vueStores = await importModule("./application/stores", [
             "main",
             "ui"
         ]);
 
         Vue.use({
             install(ctx){
-                for(const [name, plugin] of plugins){
+                for(const [name, plugin] of vuePlugins){
                     ctx.prototype[`$$${name}`] = plugin;
                 }
             }
@@ -71,7 +71,7 @@
             },
 
             router: new VueRouter({
-                routes: routes.flatMap(([_, path])=>{
+                routes: vueRoutes.flatMap(([_, path])=>{
                     return Object.entries(path).map(([virtual, physical])=>{
                         return {
                             path: virtual,
@@ -82,8 +82,8 @@
             }),
 
             store: new Vuex.Store({
-                ...stores.shift().pop(),
-                modules: stores.reduce((ctx, [name, store])=>{
+                ...vueStores.shift().pop(),
+                modules: vueStores.reduce((ctx, [name, store])=>{
                     ctx[name] = {
                         ...store,
                         namespaced: true
