@@ -16,8 +16,10 @@
         <script src="https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vuetify@2/dist/vuetify.min.js"></script>
 
-        <script src="./core/fetch_mod.js"></script>
-        <script src="./core/vue_loader.js"></script>
+        <script src="./config/env.js"></script>
+
+        <script src="./library/fetch_mod.js"></script>
+        <script src="./library/vue_loader.js"></script>
 
         <title>Application</title>
     </head>
@@ -33,16 +35,16 @@
             return Promise.all(names.map(async name => [name, (await import(`${path}/${name}.mjs`)).default]));
         }
 
-        const vuePlugins = await importModule("./application/plugins", [
+        const vuePlugins = await importModule(`${$ENV.PATH_AP}/plugins`, [
             "dateUnix"
         ]);
 
-        const vueRoutes = await importModule("./application/routes", [
+        const vueRoutes = await importModule(`${$ENV.PATH_AP}/routes`, [
             "main",
             "page"
         ]);
 
-        const vueStores = await importModule("./application/stores", [
+        const vueStores = await importModule(`${$ENV.PATH_AP}/stores`, [
             "main",
             "ui"
         ]);
@@ -60,7 +62,7 @@
             vuetify: new Vuetify(),
 
             components: {
-                "vue": () => $vueLoader("./application/templates/default.vue")
+                "vue": () => $vueLoader(`${$ENV.PATH_AP}/templates/default.vue`)
             },
 
             router: new VueRouter({
@@ -68,7 +70,7 @@
                     return Object.entries(path).map(([virtual, physical])=>{
                         return {
                             path: virtual,
-                            component: () => $vueLoader(`./application/pages/${physical}`)
+                            component: () => $vueLoader(`${$ENV.PATH_AP}/pages/${physical}`)
                         };
                     });
                 })
