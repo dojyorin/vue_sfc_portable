@@ -29,13 +29,8 @@ export default {
 
     data(){
         return {
-            count: 0
+            count: 3
         };
-    },
-
-    async mounted(){
-        const db = await $fetch("./data/users.json");
-        this.count = db.length;
     }
 }
 </script>

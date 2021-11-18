@@ -16,10 +16,6 @@
         <script src="https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vuetify@2/dist/vuetify.min.js"></script>
 
-        <script src="./library/config_env.js"></script>
-        <script src="./library/fetch_mod.js"></script>
-        <script src="./library/vue_loader.js"></script>
-
         <title>Application</title>
     </head>
 
@@ -30,20 +26,25 @@
     </body>
 
     <script async type="module">
+        import "./library/object-suppress.js";
+        import "./library/fetch-modify.js";
+        import "./library/vue-loader.js";
+        import "./library/global-config.js";
+
         function importModule(path, names){
             return Promise.all(names.map(async name => [name, (await import(`${path}/${name}.mjs`)).default]));
         }
 
-        const vuePlugins = await importModule(`${$ENV.PATH_AP}/plugins`, [
+        const vuePlugins = await importModule(`${$CONFIG.ap}/plugins`, [
             "dateUnix"
         ]);
 
-        const vueRoutes = await importModule(`${$ENV.PATH_AP}/routes`, [
+        const vueRoutes = await importModule(`${$CONFIG.ap}/routes`, [
             "main",
             "page"
         ]);
 
-        const vueStores = await importModule(`${$ENV.PATH_AP}/stores`, [
+        const vueStores = await importModule(`${$CONFIG.ap}/stores`, [
             "main",
             "ui"
         ]);
@@ -61,7 +62,7 @@
             vuetify: new Vuetify(),
 
             components: {
-                "vue": () => $vueLoader(`${$ENV.PATH_AP}/templates/default.vue`)
+                "vue": () => $vueLoader(`${$CONFIG.ap}/templates/default.vue`)
             },
 
             router: new VueRouter({
@@ -69,7 +70,7 @@
                     return Object.entries(path).map(([virtual, physical])=>{
                         return {
                             path: virtual,
-                            component: () => $vueLoader(`${$ENV.PATH_AP}/pages/${physical}`)
+                            component: () => $vueLoader(`${$CONFIG.ap}/pages/${physical}`)
                         };
                     });
                 })
