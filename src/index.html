@@ -16,6 +16,10 @@
         <script src="https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vuetify@2/dist/vuetify.min.js"></script>
 
+        <script src="./library/object-suppress.js"></script>
+        <script src="./library/fetch-modify.js"></script>
+        <script src="./library/vue-loader.js"></script>
+
         <title>Application</title>
     </head>
 
@@ -26,25 +30,27 @@
     </body>
 
     <script async type="module">
-        import "./library/object-suppress.js";
-        import "./library/fetch-modify.js";
-        import "./library/vue-loader.js";
-        import "./library/global-config.js";
+        Object.defineProperty(globalThis, "$CONFIG", {
+            enumerable: false,
+            configurable: false,
+            writable: false,
+            value: $deepSeal(await $fetch("./config.json"))
+        });
 
         function importModule(path, names){
-            return Promise.all(names.map(async name => [name, (await import(`${path}/${name}.mjs`)).default]));
+            return Promise.all(names.map(async name => [name, (await import(`${path}/${name}.js`)).default]));
         }
 
-        const vuePlugins = await importModule(`${$CONFIG.ap}/plugins`, [
+        const vuePlugins = await importModule("./application/plugins", [
             "dateUnix"
         ]);
 
-        const vueRoutes = await importModule(`${$CONFIG.ap}/routes`, [
+        const vueRoutes = await importModule("./application/routes", [
             "main",
             "page"
         ]);
 
-        const vueStores = await importModule(`${$CONFIG.ap}/stores`, [
+        const vueStores = await importModule("./application/stores", [
             "main",
             "ui"
         ]);
@@ -62,7 +68,7 @@
             vuetify: new Vuetify(),
 
             components: {
-                "vue": () => $vueLoader(`${$CONFIG.ap}/templates/default.vue`)
+                "vue": () => $vueLoader("./application/templates/default.vue")
             },
 
             router: new VueRouter({
@@ -70,7 +76,7 @@
                     return Object.entries(path).map(([virtual, physical])=>{
                         return {
                             path: virtual,
-                            component: () => $vueLoader(`${$CONFIG.ap}/pages/${physical}`)
+                            component: () => $vueLoader(`./application/pages/${physical}`)
                         };
                     });
                 })

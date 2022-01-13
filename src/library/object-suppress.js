@@ -31,20 +31,3 @@ Object.defineProperty(globalThis, "$deepSeal", {
         return o;
     }
 });
-
-Object.defineProperty(globalThis, "$deepPreventExtensions", {
-    enumerable: false,
-    configurable: false,
-    writable: false,
-    value(o){
-        Object.preventExtensions(o);
-
-        for(const k of Object.keys(o)){
-            if(!Object.isExtensible(o[k]) && o.hasOwnProperty(k) && typeof o[k] === "object" && o[k] !== null){
-                $deepPreventExtensions(o[k]);
-            }
-        }
-
-        return o;
-    }
-});
