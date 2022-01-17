@@ -34,7 +34,7 @@
             enumerable: false,
             configurable: false,
             writable: false,
-            value: $deepSeal((await import("./config.json", {assert:{type:"json"}})).default)
+            value: $deepSeal((await import("./config.json", {assert: {type: "json"}})).default)
         });
 
         function importModule(path, names){
