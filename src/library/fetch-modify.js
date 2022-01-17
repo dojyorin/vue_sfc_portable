@@ -3,7 +3,7 @@ Object.defineProperty(globalThis, "$fetch", {
     configurable: false,
     writable: false,
     async value(path, option){
-        return (await fetch(Object.entries(option?.params ?? {}).reduce((url, [key, value])=>{
+        const response = await fetch(Object.entries(option?.params ?? {}).reduce((url, [key, value])=>{
             url.searchParams.append(key, value);
             return url;
         }, new URL(path, /^http(s|):\/\//i.test(path) ? undefined : location.href)), {
@@ -20,6 +20,8 @@ Object.defineProperty(globalThis, "$fetch", {
             window: null,
             headers: option?.headers ?? {},
             body: option?.body ?? null
-        }))[option?.type ?? "json"]();
+        });
+
+        return option?.type === "raw" ? response : response[option?.type ?? "json"]();
     }
 });
