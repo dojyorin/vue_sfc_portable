@@ -4,9 +4,9 @@ Object.defineProperty(globalThis, "$fetch", {
     writable: false,
     async value(path, option){
         const {origin, pathname} = /^https*:\/\//i.test(path) ? new URL(path) : new URL(path, location.href);
-        const query = new URLSearchParams(Object.entries(option?.query ?? {})).toString();
+        const query = (option?.query instanceof URLSearchParams ? option.query : new URLSearchParams(option?.query instanceof Array ? option.query : Object.entries(option?.query ?? {}))).toString();
 
-        const response = await fetch(`${origin}${pathname === "/" ? "": pathname}${query === "" ? "" : `?${query}`}`.toLowerCase(), {
+        const response = await fetch(`${origin}${pathname.replace(/\/$/, "")}${query && "?"}${query}`, {
             method: option?.method ?? "get",
             credentials: option?.credentials ?? "omit",
             mode: option?.mode ?? "cors",
@@ -22,6 +22,6 @@ Object.defineProperty(globalThis, "$fetch", {
             body: option?.body ?? null
         });
 
-        return option?.type === "raw" ? response : response[option?.type ?? "json"]();
+        return option?.type === "response" ? response : response[option?.type ?? "json"]();
     }
 });
