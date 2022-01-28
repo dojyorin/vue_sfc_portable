@@ -25,9 +25,9 @@ Object.defineProperty(globalThis, "$vueLoader", {
         let scopedTemplate = "";
         let scopedStyle = "";
 
-        if(/^<style\s.*?scoped/i.test(style)){
+        if(/^<style .*?scoped/i.test(style)){
             const scope = `data-v-${Array.from(crypto.getRandomValues(new Uint8Array(4))).map(byte => byte.toString(16)).join("")}`;
-            scopedTemplate = template.replace(/<[a-zA-Z0-9_\-]+?\s.*?class=".*?"/ig, `$& ${scope}`);
+            scopedTemplate = template.replace(/<[a-zA-Z0-9_\-]+? .*?class=".*?"/ig, `$& ${scope}`);
             scopedStyle = Array.from(new Set(styleBody.match(/\.[a-zA-Z_][a-zA-Z0-9_\-]*/ig))).reduce((temp, selector) => temp.replace(new RegExp(selector, "ig"), `${selector}[${scope}]`), styleBody);
         }
 
@@ -37,7 +37,7 @@ Object.defineProperty(globalThis, "$vueLoader", {
 
         return {
             template: scopedTemplate || templateBody,
-            extends: new Function(scriptBody.replace(/^\s*?export\s+?default\s*/is, "return"))() || {}
+            extends: new Function(scriptBody.replace(/^ *?export +?default */is, "return"))() || {}
         };
     }
 });
