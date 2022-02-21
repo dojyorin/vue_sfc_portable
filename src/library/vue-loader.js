@@ -11,7 +11,7 @@ Object.defineProperty(globalThis, "$vueLoader", {
             return doc.trim().replace(new RegExp(`^<${tag}.*?>`, "is"), "").replace(new RegExp(`</${tag}>$`, "i"), "").trim();
         }
 
-        const response = await $fetch(url, {
+        const response = await $fetchExtend(url, {
             type: "text"
         });
 
