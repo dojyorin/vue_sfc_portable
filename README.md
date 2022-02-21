@@ -1,1 +1,1 @@
-# Vue.js Web Application Template
+# **Web Application Template (Vue.js)**

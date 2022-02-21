@@ -16,7 +16,6 @@
         <script src="https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vuetify@2/dist/vuetify.min.js"></script>
 
-        <script src="./library/object-suppress.js"></script>
         <script src="./library/fetch-modify.js"></script>
         <script src="./library/vue-loader.js"></script>
 
@@ -30,13 +29,6 @@
     </body>
 
     <script async type="module">
-        Object.defineProperty(globalThis, "$CONFIG", {
-            enumerable: false,
-            configurable: false,
-            writable: false,
-            value: $deepSeal((await import("./config.json", {assert: {type: "json"}})).default)
-        });
-
         function importModule(path, names){
             return Promise.all(names.map(async name => [name, (await import(`${path}/${name}.js`)).default]));
         }
