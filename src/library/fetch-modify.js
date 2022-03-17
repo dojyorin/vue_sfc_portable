@@ -3,11 +3,11 @@ Object.defineProperty(globalThis, "$fetchExtend", {
     configurable: false,
     writable: false,
     async value(path, option){
-        const {origin, pathname} = /^https*:\/\//i.test(path) ? new URL(path) : new URL(path, location.href);
-        const query = (option?.query instanceof URLSearchParams ? option.query : new URLSearchParams(option?.query instanceof Array ? option.query : Object.entries(option?.query ?? {}))).toString();
+        const {origin, pathname} = /^https{0,1}:\/\//i.test(path) ? new URL(path) : new URL(path, location.href);
+        const query = new URLSearchParams(option?.query ?? {}).toString();
 
-        const response = await fetch(`${origin}${pathname.replace(/\/$/, "")}${query && "?"}${query}`, {
-            method: option?.method ?? "get",
+        const response = await fetch(`${origin}${pathname}${query && "?"}${query}`, {
+            method: option?.method ?? "GET",
             credentials: option?.credentials ?? "omit",
             mode: option?.mode ?? "cors",
             cache: option?.cache ?? "no-cache",
