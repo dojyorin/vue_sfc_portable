@@ -29,28 +29,14 @@
     </body>
 
     <script async type="module">
-        function importModule(path, names){
-            return Promise.all(names.map(async name => [name, (await import(`${path}/${name}.js`)).default]));
-        }
-
-        const vuePlugins = await importModule("./application/plugins", [
-            "dateUnix"
-        ]);
-
-        const vueRoutes = await importModule("./application/routes", [
-            "main",
-            "page"
-        ]);
-
-        const vueStores = await importModule("./application/stores", [
-            "main",
-            "ui"
-        ]);
+        import route from "./application/route.js";
+        import store from "./application/store.js";
+        import plugin from "./application/plugin.js";
 
         Vue.use({
             install(ctx){
-                for(const [name, plugin] of vuePlugins){
-                    ctx.prototype[`$$${name}`] = plugin;
+                for(const f of Object.values(plugin)){
+                    ctx.prototype[`$$${f.name}`] = f;
                 }
             }
         });
@@ -58,32 +44,11 @@
         const vue = new Vue({
             el: "#vue",
             vuetify: new Vuetify(),
-
+            router: new VueRouter(route),
+            store: new Vuex.Store(store),
             components: {
-                "vue": () => $vueLoader("./application/templates/default.vue")
-            },
-
-            router: new VueRouter({
-                routes: vueRoutes.flatMap(([_, path])=>{
-                    return Object.entries(path).map(([virtual, physical])=>{
-                        return {
-                            path: virtual,
-                            component: () => $vueLoader(`./application/pages/${physical}`)
-                        };
-                    });
-                })
-            }),
-
-            store: new Vuex.Store({
-                ...vueStores.shift().pop(),
-                modules: vueStores.reduce((ctx, [name, store])=>{
-                    ctx[name] = {
-                        ...store,
-                        namespaced: true
-                    };
-                    return ctx;
-                }, {})
-            })
+                "vue": () => $vueLoader("./application/main.vue")
+            }
         });
     </script>
 

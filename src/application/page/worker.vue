@@ -1,6 +1,6 @@
 <template>
 <v-container fluid>
-    <v-btn dark :color="$store.state.ui.colorSub" @click="echo()">Worker</v-btn>
+    <v-btn dark :color="$store.state.vColorSub" @click="echo()">Worker</v-btn>
 </v-container>
 </template>
 

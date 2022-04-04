@@ -5,7 +5,7 @@
     </template>
 
     <v-card>
-        <v-system-bar v-if="system" window dark :color="$store.state.ui.colorSub">
+        <v-system-bar v-if="system" window dark :color="color">
             <v-icon left>{{icon}}</v-icon>
             <span>{{title}}</span>
         </v-system-bar>
@@ -22,6 +22,7 @@ export default {
     props: {
         system: Boolean,
         title: String,
+        color: String,
         icon: String
     }
 };
