@@ -29,13 +29,13 @@
     </body>
 
     <script async type="module">
-        import route from "./application/route.js";
-        import store from "./application/store.js";
-        import plugin from "./application/plugin.js";
+        import {plugins} from "./application/plugin.js";
+        import {routes} from "./application/route.js";
+        import {state, getter, setter, action} from "./application/store.js";
 
         Vue.use({
             install(ctx){
-                for(const f of Object.values(plugin)){
+                for(const f of plugins){
                     ctx.prototype[`$$${f.name}`] = f;
                 }
             }
@@ -44,11 +44,21 @@
         const vue = new Vue({
             el: "#vue",
             vuetify: new Vuetify(),
-            router: new VueRouter(route),
-            store: new Vuex.Store(store),
+
             components: {
                 "vue": () => $vueLoader("./application/main.vue")
-            }
+            },
+
+            router: new VueRouter({
+                routes: routes.map(({route, file}) => ({path: route, component: () => $vueLoader(file)}))
+            }),
+
+            store: new Vuex.Store({
+                state: () => ({...state}),
+                getters: {...getter},
+                mutations: {...setter},
+                actions: {...action}
+            })
         });
     </script>
 

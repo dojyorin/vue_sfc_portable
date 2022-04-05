@@ -1,15 +1,13 @@
-export default {
-    routes: [{
-        path: "*",
-        component: () => $vueLoader("./application/page/404.vue")
-    }, {
-        path: "/",
-        component: () => $vueLoader("./application/page/index.vue")
-    }, {
-        path: "/sub",
-        component: () => $vueLoader("./application/page/sub.vue")
-    }, {
-        path: "/worker",
-        component: () => $vueLoader("./application/page/worker.vue")
-    }]
-};
+export const routes = [{
+    route: "*",
+    file: "./application/page/404.vue"
+}, {
+    route: "/",
+    file: "./application/page/index.vue"
+}, {
+    route: "/sub",
+    file: "./application/page/sub.vue"
+}, {
+    route: "/worker",
+    file: "./application/page/worker.vue"
+}];

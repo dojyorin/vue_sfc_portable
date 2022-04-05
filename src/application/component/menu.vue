@@ -1,29 +1,29 @@
 <template>
-<v-menu offset-y min-width="300" :close-on-content-click="false">
-    <template #activator="bridge">
-        <slot name="activator" v-bind="bridge"></slot>
-    </template>
+    <v-menu offset-y min-width="300" :close-on-content-click="false">
+        <template #activator="bridge">
+            <slot name="activator" v-bind="bridge"></slot>
+        </template>
 
-    <v-card>
-        <v-system-bar v-if="system" window dark :color="color">
-            <v-icon left>{{icon}}</v-icon>
-            <span>{{title}}</span>
-        </v-system-bar>
+        <v-card>
+            <v-system-bar v-if="system" window dark :color="color">
+                <v-icon left>{{icon}}</v-icon>
+                <span>{{title}}</span>
+            </v-system-bar>
 
-        <v-card-text class="pa-0">
-            <slot></slot>
-        </v-card-text>
-    </v-card>
-</v-menu>
+            <v-card-text class="pa-0">
+                <slot></slot>
+            </v-card-text>
+        </v-card>
+    </v-menu>
 </template>
 
 <script>
-export default {
-    props: {
-        system: Boolean,
-        title: String,
-        color: String,
-        icon: String
-    }
-};
+    export default {
+        props: {
+            system: Boolean,
+            title: String,
+            color: String,
+            icon: String
+        }
+    };
 </script>
