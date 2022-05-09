@@ -5,35 +5,11 @@
             <span>{{$store.state.vNotifyMessage}}</span>
         </v-snackbar>
 
-        <v-overlay dark z-index="9" opacity="0.9" v-model="$store.state.vLoadingVisible">
+        <v-overlay dark z-index="999" opacity="0.9" v-model="$store.state.vLoadingVisible">
             <v-progress-circular indeterminate size="128" width="6" color="blue">
                 <span class="white--text">Loading...</span>
             </v-progress-circular>
         </v-overlay>
-
-        <v-navigation-drawer app temporary v-model="$store.state.vDrawerVisible">
-            <v-toolbar dark color="blue" :height="$vuetify.application.top">
-                <v-btn icon @click="$store.commit('vDrawer', false)">
-                    <v-icon large>mdi-close</v-icon>
-                </v-btn>
-
-                <v-toolbar-title>Menu</v-toolbar-title>
-            </v-toolbar>
-
-            <v-list>
-                <template v-for="(page, i) in drawerPages">
-                    <v-list-item :key="i" :to="page.to">
-                        <v-list-item-icon>
-                            <v-icon>{{page.icon}}</v-icon>
-                        </v-list-item-icon>
-
-                        <v-list-item-content>
-                            <v-list-item-title>{{page.title}}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </template>
-            </v-list>
-        </v-navigation-drawer>
 
         <v-app-bar app dark color="blue" height="52">
             <v-app-bar-nav-icon @click="$store.commit('vDrawer', true)"></v-app-bar-nav-icon>
@@ -65,6 +41,30 @@
                 Copyright
             </v-row>
         </v-footer>
+
+        <v-navigation-drawer app temporary v-model="$store.state.vDrawerVisible">
+            <v-toolbar dark color="blue" :height="$vuetify.application.top">
+                <v-btn icon @click="$store.commit('vDrawer', false)">
+                    <v-icon large>mdi-close</v-icon>
+                </v-btn>
+
+                <v-toolbar-title>Menu</v-toolbar-title>
+            </v-toolbar>
+
+            <v-list>
+                <template v-for="(page, i) in drawerPages">
+                    <v-list-item :key="i" :to="page.to">
+                        <v-list-item-icon>
+                            <v-icon>{{page.icon}}</v-icon>
+                        </v-list-item-icon>
+
+                        <v-list-item-content>
+                            <v-list-item-title>{{page.title}}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </template>
+            </v-list>
+        </v-navigation-drawer>
     </v-app>
 </template>
 
