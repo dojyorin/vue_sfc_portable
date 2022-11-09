@@ -1,13 +1,17 @@
+import {fetchExtend} from "./fetch_extend.js";
+
+export function loadComponent(path){
+
+}
+
 Object.defineProperty(globalThis, "$vueLoader", {
     enumerable: false,
     configurable: false,
     writable: false,
     async value(path){
-        const response = await $fetchExtend(path, {
-            type: "text"
-        });
+        const response = await fetchExtend(path, "text");
 
-        const dom = [...new DOMParser().parseFromString(`<html><body>${response}</body></html>`, "text/html").body.children];
+        const dom = [...new DOMParser().parseFromString(response, "text/html").head.children];
         const template = dom.find(({tagName}) => tagName === "TEMPLATE");
         const script = dom.find(({tagName}) => tagName === "SCRIPT");
         const style = dom.find(({tagName}) => tagName === "STYLE");
