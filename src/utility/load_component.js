@@ -14,13 +14,13 @@ export async function loadComponent(path){
     const component = await fetchExtend(path, "text");
     const dom = [...new DOMParser().parseFromString(component, "text/html").head.children];
 
-    /** @type {HTMLTemplateElement} */
+    /** @type {?HTMLTemplateElement} */
     const template = dom.find(({tagName}) => tagName === "TEMPLATE");
 
-    /** @type {HTMLScriptElement} */
+    /** @type {?HTMLScriptElement} */
     const script = dom.find(({tagName}) => tagName === "SCRIPT");
 
-    /** @type {HTMLStyleElement} */
+    /** @type {?HTMLStyleElement} */
     const style = dom.find(({tagName}) => tagName === "STYLE");
 
     if(style){
