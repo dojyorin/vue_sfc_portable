@@ -1,46 +1,54 @@
 import {fetchExtend} from "./fetch_extend.js";
 
-export function loadComponent(path){
+/**
+* @typedef {object} VueComponent
+* @property {string} template
+* @property {Record<string, unknown>} extends
+*/
 
-}
+/**
+* @param {string} path
+* @return {Promise<VueComponent>}
+*/
+export async function loadComponent(path){
+    const component = await fetchExtend(path, "text");
 
-Object.defineProperty(globalThis, "$vueLoader", {
-    enumerable: false,
-    configurable: false,
-    writable: false,
-    async value(path){
-        const response = await fetchExtend(path, "text");
+    const dom = [...new DOMParser().parseFromString(component, "text/html").head.children];
 
-        const dom = [...new DOMParser().parseFromString(response, "text/html").head.children];
-        const template = dom.find(({tagName}) => tagName === "TEMPLATE");
-        const script = dom.find(({tagName}) => tagName === "SCRIPT");
-        const style = dom.find(({tagName}) => tagName === "STYLE");
+    /** @type {HTMLTemplateElement} */
+    const template = dom.find(({tagName}) => tagName === "TEMPLATE");
 
-        if(style?.hasAttribute("scoped")){
-            const scope = `data-v-${Math.floor(Math.random() * 0x1000000).toString(16).padStart(6, "0")}`;
+    /** @type {HTMLScriptElement} */
+    const script = dom.find(({tagName}) => tagName === "SCRIPT");
 
-            for(const {attributes} of template.content.querySelectorAll("[class]")){
-                attributes.setNamedItem(document.createAttribute(scope));
-            }
+    /** @type {HTMLStyleElement} */
+    const style = dom.find(({tagName}) => tagName === "STYLE");
 
-            for(const rule of style.sheet.cssRules){
-                rule.selectorText = `${rule.selectorText}[${scope}]`;
-            }
+    if(style?.hasAttribute("scoped")){
+        const scope = `data-v-${Math.floor(Math.random() * 0x01000000).toString(16).padStart(6, "0")}`;
+
+        for(const {attributes} of template.content.querySelectorAll("[class]")){
+            attributes.setNamedItem(document.createAttribute(scope));
         }
 
-        if(style){
-            const css = document.createElement("style");
-
-            for(const {cssText} of style.sheet.cssRules){
-                css.innerHTML += `${cssText}\n`;
-            }
-
-            document.head.appendChild(css);
+        /** @type {CSSStyleRule} */
+        for(const rule of style.sheet.cssRules){
+            rule.selectorText = `${rule.selectorText}[${scope}]`;
         }
-
-        return {
-            template: template?.innerHTML ?? "",
-            extends: await new (async function(){}).constructor(script?.innerHTML?.replace(/export +default/, "return") ?? "")() || {}
-        };
     }
-});
+
+    if(style){
+        const css = document.createElement("style");
+
+        for(const {cssText} of style.sheet.cssRules){
+            css.innerHTML += `${cssText}\n`;
+        }
+
+        document.head.appendChild(css);
+    }
+
+    return {
+        template: template?.innerHTML ?? "",
+        extends: await new (async function(){}).constructor(script?.innerHTML?.replace(/export +default/, "return") ?? "")() || {}
+    };
+}
