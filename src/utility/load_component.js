@@ -12,7 +12,6 @@ import {fetchExtend} from "./fetch_extend.js";
 */
 export async function loadComponent(path){
     const component = await fetchExtend(path, "text");
-
     const dom = [...new DOMParser().parseFromString(component, "text/html").head.children];
 
     /** @type {HTMLTemplateElement} */
@@ -24,21 +23,24 @@ export async function loadComponent(path){
     /** @type {HTMLStyleElement} */
     const style = dom.find(({tagName}) => tagName === "STYLE");
 
-    if(style?.hasAttribute("scoped")){
-        const scope = `data-v-${Math.floor(Math.random() * 0x01000000).toString(16).padStart(6, "0")}`;
-
-        for(const {attributes} of template.content.querySelectorAll("[class]")){
-            attributes.setNamedItem(document.createAttribute(scope));
-        }
-
-        /** @type {CSSStyleRule} */
-        for(const rule of style.sheet.cssRules){
-            rule.selectorText = `${rule.selectorText}[${scope}]`;
-        }
-    }
-
     if(style){
         const css = document.createElement("style");
+
+        if(style.hasAttribute("scoped")){
+            const scope = `scope-${crypto.randomUUID()}`;
+
+            for(const {attributes} of template.content.querySelectorAll("[class]")){
+                attributes.setNamedItem(document.createAttribute(scope));
+            }
+
+            for(const rule of style.sheet.cssRules){
+                if(!(rule instanceof CSSStyleRule)){
+                    continue;
+                }
+
+                rule.selectorText = `${rule.selectorText}[${scope}]`;
+            }
+        }
 
         for(const {cssText} of style.sheet.cssRules){
             css.innerHTML += `${cssText}\n`;
