@@ -9,7 +9,7 @@
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@2/dist/vuetify.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@5/css/materialdesignicons.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?display=swap&family=Kosugi+Maru:wght@400">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=M+PLUS+1+Code:wght@100;200;300;400;500;600;700">
 
         <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue-router@3/dist/vue-router.min.js"></script>
@@ -26,38 +26,35 @@
     </body>
 
     <script async type="module">
-        import {fetchExtend} from "./utility/fetch_extend.js";
         import {loadComponent} from "./utility/load_component.js";
 
-        import {plugins} from "./application/plugin.js";
-        import {routes} from "./application/route.js";
-        import {state, getter, setter, action} from "./application/store.js";
-
-        Vue.use({
-            install(ctx){
-                for(const f of plugins){
-                    ctx.prototype[`$$${f.name}`] = f;
-                }
-            }
-        });
+        import {pages} from "./application/page.js";
+        import {vxState, vxGet, vxSet, vxAction} from "./application/store.js";
 
         const vue = new Vue({
             el: "#vue",
             vuetify: new Vuetify(),
 
             components: {
-                "vue": () => $vueLoader("./application/main.vue")
+                "vue": () => loadComponent("./application/page/.root.vue")
             },
 
             router: new VueRouter({
-                routes: routes.map(({route, file}) => ({path: route, component: () => $vueLoader(file)}))
+                routes: pages.map(({match, path})=>{
+                    return {
+                        path: match,
+                        component(){
+                            return loadComponent(path);
+                        }
+                    };
+                })
             }),
 
             store: new Vuex.Store({
-                state: () => ({...state}),
-                getters: {...getter},
-                mutations: {...setter},
-                actions: {...action}
+                state: vxState,
+                getters: vxGet,
+                mutations: vxSet,
+                actions: vxAction
             })
         });
     </script>
@@ -67,7 +64,7 @@
             display: none !important;
         }
         *{
-            font-family: "Kosugi Maru" !important;
+            font-family: "M PLUS 1 Code" !important;
         }
         .v-btn{
             text-transform: none !important;

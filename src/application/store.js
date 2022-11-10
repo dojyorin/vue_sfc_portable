@@ -1,15 +1,17 @@
-export const state = {
-    vNotifyVisible: false,
-    vNotifyMessage: "",
-    vNotifyColor: "",
-    vLoadingVisible: false,
-    vDrawerVisible: false,
-    menuCount: 1
-};
+export function vxState(){
+    return {
+        vNotifyVisible: false,
+        vNotifyMessage: "",
+        vNotifyColor: "",
+        vLoadingVisible: false,
+        vDrawerVisible: false,
+        menuCount: 1
+    };
+}
 
-export const getter = {};
+export const vxGet = {};
 
-export const setter = {
+export const vxSet = {
     vNotify(state, payload){
         state.vNotifyVisible = false;
         state.vNotifyMessage = payload?.message ?? "";
@@ -26,4 +28,4 @@ export const setter = {
     }
 };
 
-export const action = {};
+export const vxAction = {};
