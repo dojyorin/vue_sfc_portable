@@ -34,11 +34,9 @@ export async function loadComponent(path){
             }
 
             for(const rule of style.sheet.cssRules){
-                if(!(rule instanceof CSSStyleRule)){
-                    continue;
+                if(rule instanceof CSSStyleRule){
+                    rule.selectorText = `${rule.selectorText}[${scope}]`;
                 }
-
-                rule.selectorText = `${rule.selectorText}[${scope}]`;
             }
         }
 
