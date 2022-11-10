@@ -30,11 +30,11 @@
 </template>
 
 <script>
-    const {loadComponent} = await import("/utility/load_component/js");
+    const {loadComponent} = await import("./utility/load_component/js");
 
     export default {
         components: {
-            "vue-dialog": () => loadComponent("/application/component/dialog.vue")
+            "vue-dialog": () => loadComponent("./application/component/dialog.vue")
         },
 
         data(){
