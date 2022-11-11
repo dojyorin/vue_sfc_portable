@@ -69,11 +69,11 @@
 </template>
 
 <script>
-    const {loadComponent} = await import("/utility/load_component.js");
+    const {loadComponent} = await import("./utility/load_component.js");
 
     export default {
         components: {
-            "vue-menu": () => loadComponent("/application/component/menu.vue")
+            "vue-menu": () => loadComponent("./application/component/menu.vue")
         },
 
         data(){
