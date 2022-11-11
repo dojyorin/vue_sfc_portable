@@ -1,4 +1,4 @@
-export const pages = [{
+export const vrPages = [{
     match: "*",
     path: "./application/page/404.vue"
 }, {

@@ -28,7 +28,7 @@
     <script async type="module">
         import {loadComponent} from "./core.js";
 
-        import {pages} from "./application/page.js";
+        import {vrPages} from "./application/page.js";
         import {vxState, vxGet, vxSet, vxAction} from "./application/store.js";
 
         const vue = new Vue({
@@ -40,7 +40,7 @@
             },
 
             router: new VueRouter({
-                routes: pages.map(({match, path})=>{
+                routes: vrPages.map(({match, path})=>{
                     return {
                         path: match,
                         component(){
