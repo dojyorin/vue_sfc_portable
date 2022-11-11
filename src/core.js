@@ -1,4 +1,4 @@
-import {fetchExtend} from "./fetch_extend.js";
+import {fetchExtend} from "./utility/fetch_extend.js";
 
 /**
 * @typedef {object} VueComponent

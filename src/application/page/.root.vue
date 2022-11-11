@@ -69,7 +69,7 @@
 </template>
 
 <script>
-    const {loadComponent} = await import("./utility/load_component.js");
+    const {loadComponent} = await import("./core.js");
 
     export default {
         components: {
