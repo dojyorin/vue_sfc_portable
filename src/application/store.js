@@ -1,4 +1,4 @@
-export function vxState(){
+export function state(){
     return {
         vNotifyVisible: false,
         vNotifyMessage: "",
@@ -9,23 +9,23 @@ export function vxState(){
     };
 }
 
-export const vxGet = {};
+export const getter = {};
 
-export const vxSet = {
-    vNotify(state, payload){
-        state.vNotifyVisible = false;
-        state.vNotifyMessage = payload?.message ?? "";
-        state.vNotifyColor = payload?.color ?? "";
-        state.vNotifyVisible = true;
+export const setter = {
+    vNotify(s, payload){
+        s.vNotifyVisible = false;
+        s.vNotifyMessage = payload?.message ?? "";
+        s.vNotifyColor = payload?.color ?? "";
+        s.vNotifyVisible = true;
     },
 
-    vLoading(state, payload){
-        state.vLoadingVisible = payload;
+    vLoading(s, payload){
+        s.vLoadingVisible = payload;
     },
 
-    vDrawer(state, payload){
-        state.vDrawerVisible = payload;
+    vDrawer(s, payload){
+        s.vDrawerVisible = payload;
     }
 };
 
-export const vxAction = {};
+export const action = {};

@@ -28,8 +28,8 @@
     <script async type="module">
         import {loadComponent} from "./core.js";
 
-        import {vrPages} from "./application/page.js";
-        import {vxState, vxGet, vxSet, vxAction} from "./application/store.js";
+        import {routes} from "./application/route.js";
+        import {state, getter, setter, action} from "./application/store.js";
 
         const vue = new Vue({
             el: "#vue",
@@ -40,21 +40,21 @@
             },
 
             router: new VueRouter({
-                routes: vrPages.map(({match, path})=>{
+                routes: routes.map(({match, route})=>{
                     return {
                         path: match,
                         component(){
-                            return loadComponent(path);
+                            return loadComponent(route);
                         }
                     };
                 })
             }),
 
             store: new Vuex.Store({
-                state: vxState,
-                getters: vxGet,
-                mutations: vxSet,
-                actions: vxAction
+                state: state,
+                getters: getter,
+                mutations: setter,
+                actions: action
             })
         });
     </script>
@@ -62,6 +62,17 @@
     <style>
         ::-webkit-scrollbar{
             display: none !important;
+        }
+        ::file-selector-button{
+            display: none !important;
+        }
+        :focus{
+            outline: none !important;
+        }
+        body{
+            user-select: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
         *{
             font-family: "M PLUS 1 Code" !important;
