@@ -1,4 +1,4 @@
-import {fetchExtend} from "./utility/simple_utility.min.js";
+import {fetchExtend} from "./utility/mod.js";
 
 /**
 * @typedef {object} VueComponent
