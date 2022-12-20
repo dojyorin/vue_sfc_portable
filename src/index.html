@@ -57,22 +57,22 @@
                 actions: action
             })
         });
+
+        // ConsoleDebug
+        Object.defineProperty(globalThis, "__vue", {
+            enumerable: false,
+            configurable: false,
+            writable: false,
+            value: vue
+        });
     </script>
 
     <style>
         ::-webkit-scrollbar{
             display: none !important;
         }
-        ::file-selector-button{
-            display: none !important;
-        }
         :focus{
             outline: none !important;
-        }
-        body{
-            user-select: none !important;
-            margin: 0 !important;
-            padding: 0 !important;
         }
         *{
             font-family: "M PLUS 1 Code" !important;
