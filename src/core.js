@@ -39,7 +39,7 @@ export async function loadComponent(path){
         const css = document.createElement("style");
 
         if(style.hasAttribute("scoped")){
-            const scope = `scope-${cryptoUuid()}`;
+            const scope = `style-${cryptoUuid()}`;
 
             for(const {attributes} of template.content.querySelectorAll("[class]")){
                 attributes.setNamedItem(document.createAttribute(scope));
@@ -59,8 +59,11 @@ export async function loadComponent(path){
         document.head.appendChild(css);
     }
 
+    const html = template?.innerHTML;
+    const js = script?.innerHTML?.replace(/export +default/, "return");
+
     return {
-        template: template?.innerHTML ?? "",
-        extends: await new AsyncFunction(script?.innerHTML?.replace(/export +default/, "return") ?? "")() || {}
+        template: html ?? "",
+        extends: js ? await new AsyncFunction(js)() : {}
     };
 }
