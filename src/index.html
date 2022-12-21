@@ -40,9 +40,8 @@
             },
 
             router: new VueRouter({
-                routes: routes.map(({option, route, file})=>{
+                routes: routes.map(({route, file})=>{
                     return {
-                        meta: option,
                         path: route,
                         component: () => loadComponent(file)
                     };
