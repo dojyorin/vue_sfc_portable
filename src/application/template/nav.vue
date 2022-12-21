@@ -1,7 +1,7 @@
 <template>
-    <v-navigation-drawer app temporary v-model="$store.getters.vNav">
+    <v-navigation-drawer app temporary v-model="nav">
         <v-toolbar dark color="blue" :height="$vuetify.application.top">
-            <v-btn icon @click="$store.commit('vNav', false)">
+            <v-btn icon @click="nav = false">
                 <v-icon large>mdi-close</v-icon>
             </v-btn>
 
@@ -25,9 +25,19 @@
 </template>
 
 <script>
-    const {loadComponent} = await import("./core.js");
-
     export default {
+        computed: {
+            nav: {
+                get(){
+                    return this.$store.getters.navVisible;
+                },
+
+                set(v){
+                    this.$store.commit("navVisible", v);
+                }
+            }
+        },
+
         data(){
             return {
                 pages: [{

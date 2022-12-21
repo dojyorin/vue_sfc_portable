@@ -1,6 +1,6 @@
 <template>
     <v-app-bar app dark dense :color="$store.getters.themeColor">
-        <v-app-bar-nav-icon @click="$store.commit('vNav', true)"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click="openNav()"></v-app-bar-nav-icon>
         <v-toolbar-title>Application</v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -27,6 +27,12 @@
     export default {
         components: {
             "ct-menu": () => loadComponent("./application/component/menu.vue")
+        },
+
+        methods: {
+            openNav(){
+                this.$store.commit("navVisible", true);
+            }
         }
     };
 </script>

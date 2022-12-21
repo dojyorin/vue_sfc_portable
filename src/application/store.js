@@ -11,19 +11,22 @@ export function state(){
 }
 
 export const getter = {
-    vNotify(s){
+    notifyVisible(s){
+        return s.notifyVisible;
+    },
+
+    notifyContent(s){
         return {
-            visible: s.notifyVisible,
             message: s.notifyMessage,
             color: s.notifyColor
         };
     },
 
-    vLoading(s){
+    loadingVisible(s){
         return s.loadingVisible;
     },
 
-    vNav(s){
+    navVisible(s){
         return s.navVisible;
     },
 
@@ -37,23 +40,23 @@ export const getter = {
 };
 
 export const setter = {
-    vNotify(s, payload){
+    notifyVisible(s, p){
+        s.notifyVisible = p;
+    },
+
+    notifyContent(s, p){
         s.notifyVisible = false;
-        s.notifyMessage = payload.message;
-        s.notifyColor = payload.color;
+        s.notifyMessage = p.message;
+        s.notifyColor = p.color;
         s.notifyVisible = true;
     },
 
-    vLoading(s, payload){
-        s.loadingVisible = payload;
+    loadingVisible(s, p){
+        s.loadingVisible = p;
     },
 
-    vNav(s, payload){
-        s.navVisible = payload;
-    },
-
-    menuCount(s){
-        return s.menuCount;
+    navVisible(s, p){
+        s.navVisible = p;
     }
 };
 

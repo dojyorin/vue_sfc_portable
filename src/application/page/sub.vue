@@ -44,9 +44,9 @@
         },
 
         async mounted(){
-            this.$store.commit("vLoading", true);
+            this.$store.commit("loadingVisible", true);
             await new Promise(res => setTimeout(res, 1000));
-            this.$store.commit("vLoading", false);
+            this.$store.commit("loadingVisible", false);
         }
     };
 </script>

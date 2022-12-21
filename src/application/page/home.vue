@@ -9,7 +9,7 @@
                     <v-card-text>Example</v-card-text>
 
                     <v-card-actions>
-                        <v-btn dark color="green" class="reflect" @click="dispatchNotify()">Notify</v-btn>
+                        <v-btn dark color="green" class="reflect" @click="showNotify()">Notify</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -20,8 +20,8 @@
 <script>
     export default {
         methods: {
-            dispatchNotify(){
-                this.$store.commit("vNotify", {
+            showNotify(){
+                this.$store.commit("notifyContent", {
                     message: "Test",
                     color: "success"
                 });
