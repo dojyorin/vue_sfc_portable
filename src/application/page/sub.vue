@@ -13,7 +13,7 @@
             </v-list-item-content>
 
             <v-list-item-action>
-                <vue-dialog persistent maximize color="purple" title="Dialog" icon="mdi-information-outline" v-model="dialog">
+                <ct-dialog persistent maximize color="purple" title="Dialog" icon="mdi-information-outline" v-model="dialog">
                     <template #activator>
                         <v-btn icon @click.stop="dialog = true">
                             <v-icon>mdi-information-outline</v-icon>
@@ -23,7 +23,7 @@
                     <v-card>
                         <v-card-text>Contents</v-card-text>
                     </v-card>
-                </vue-dialog>
+                </ct-dialog>
             </v-list-item-action>
         </v-list-item>
     </v-list>
@@ -34,7 +34,7 @@
 
     export default {
         components: {
-            "vue-dialog": () => loadComponent("./application/component/dialog.vue")
+            "ct-dialog": () => loadComponent("./application/component/dialog.vue")
         },
 
         data(){
