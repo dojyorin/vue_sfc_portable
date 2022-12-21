@@ -1,4 +1,4 @@
-import {fetchExtend} from "./utility/mod.js";
+import {fetchExtend, cryptoUuid} from "./utility/mod.js";
 
 /**
 * @typedef {object} VueComponent
@@ -6,28 +6,40 @@ import {fetchExtend} from "./utility/mod.js";
 * @property {Record<string, unknown>} extends
 */
 
+const AsyncFunction = (async()=>{}).constructor;
+
+/**
+* @param {string} path
+* @return {Promise<Document>}
+*/
+async function fetchDOM(path){
+    const result = await fetchExtend(path, "text");
+
+    return new DOMParser().parseFromString(result, "text/html");
+}
+
 /**
 * @param {string} path
 * @return {Promise<VueComponent>}
 */
 export async function loadComponent(path){
-    const component = await fetchExtend(path, "text");
-    const dom = [...new DOMParser().parseFromString(component, "text/html").head.children];
+    const {head} = await fetchDOM(path);
+    const elements = [...head.children];
 
     /** @type {?HTMLTemplateElement} */
-    const template = dom.find(({tagName}) => tagName === "TEMPLATE");
+    const template = elements.find(({tagName}) => tagName === "TEMPLATE");
 
     /** @type {?HTMLScriptElement} */
-    const script = dom.find(({tagName}) => tagName === "SCRIPT");
+    const script = elements.find(({tagName}) => tagName === "SCRIPT");
 
     /** @type {?HTMLStyleElement} */
-    const style = dom.find(({tagName}) => tagName === "STYLE");
+    const style = elements.find(({tagName}) => tagName === "STYLE");
 
     if(style){
         const css = document.createElement("style");
 
         if(style.hasAttribute("scoped")){
-            const scope = `scope-${crypto.randomUUID()}`;
+            const scope = `scope-${cryptoUuid()}`;
 
             for(const {attributes} of template.content.querySelectorAll("[class]")){
                 attributes.setNamedItem(document.createAttribute(scope));
@@ -49,6 +61,6 @@ export async function loadComponent(path){
 
     return {
         template: template?.innerHTML ?? "",
-        extends: await new (async function(){}).constructor(script?.innerHTML?.replace(/export +default/, "return") ?? "")() || {}
+        extends: await new AsyncFunction(script?.innerHTML?.replace(/export +default/, "return") ?? "")() || {}
     };
 }
