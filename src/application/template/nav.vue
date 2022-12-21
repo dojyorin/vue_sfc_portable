@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer app temporary v-model="$store.getter.vNav">
+    <v-navigation-drawer app temporary v-model="$store.getters.vNav">
         <v-toolbar dark color="blue" :height="$vuetify.application.top">
             <v-btn icon @click="$store.commit('vNav', false)">
                 <v-icon large>mdi-close</v-icon>

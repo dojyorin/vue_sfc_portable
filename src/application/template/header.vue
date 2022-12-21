@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar app dark dense :color="$store.getter.themeColor">
+    <v-app-bar app dark dense :color="$store.getters.themeColor">
         <v-app-bar-nav-icon @click="$store.commit('vNav', true)"></v-app-bar-nav-icon>
         <v-toolbar-title>Application</v-toolbar-title>
 
@@ -7,7 +7,7 @@
 
         <ct-menu system color="purple" title="User" icon="mdi-account-circle">
             <template #activator="{on}">
-                <v-badge overlap top color="grey" offset-y="20" offset-x="20" class="mr-n3" :content="$store.getter.menuCount">
+                <v-badge overlap top color="grey" offset-y="20" offset-x="20" class="mr-n3" :content="$store.getters.menuCount">
                     <v-btn icon v-on="on">
                         <v-icon large>mdi-account-circle</v-icon>
                     </v-btn>
