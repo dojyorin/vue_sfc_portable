@@ -1,7 +1,7 @@
 <template>
     <v-menu offset-y min-width="300" :close-on-content-click="false">
-        <template #activator="bridge">
-            <slot name="activator" v-bind="bridge"></slot>
+        <template #activator="ctx">
+            <slot name="activator" v-bind="ctx"></slot>
         </template>
 
         <v-card>

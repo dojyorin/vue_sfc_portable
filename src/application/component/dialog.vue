@@ -1,7 +1,7 @@
 <template>
     <v-dialog scrollable :persistent="persistent" :fullscreen="full" :width="width" :value="value">
-        <template #activator="bridge">
-            <slot name="activator" v-bind="bridge"></slot>
+        <template #activator="ctx">
+            <slot name="activator" v-bind="ctx"></slot>
         </template>
 
         <v-card :flat="full" :tile="full">
@@ -12,8 +12,7 @@
                 <v-spacer></v-spacer>
 
                 <v-btn v-if="maximize" icon tile @click="full = !full">
-                    <v-icon v-if="full" class="mr-0">mdi-window-restore</v-icon>
-                    <v-icon v-else class="mr-0">mdi-window-maximize</v-icon>
+                    <v-icon class="mr-0">mdi-window-{{full ? "restore" : "maximize"}}</v-icon>
                 </v-btn>
 
                 <v-btn icon tile @click="$emit('input', false)">
