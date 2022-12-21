@@ -1,7 +1,7 @@
 <template>
-    <v-snackbar dark top centered :color="$store.getters.notifyContent.message" v-model="notify">
+    <v-snackbar dark top centered :color="$store.getters.notifyContent.color" v-model="notify">
         <v-icon left>mdi-bell-ring-outline</v-icon>
-        <span>{{$store.getters.notifyContent.color}}</span>
+        <span>{{$store.getters.notifyContent.message}}</span>
     </v-snackbar>
 </template>
 
