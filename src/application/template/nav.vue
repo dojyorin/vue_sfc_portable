@@ -1,6 +1,6 @@
 <template>
     <v-navigation-drawer app temporary v-model="nav">
-        <v-toolbar dark color="blue" :height="$vuetify.application.top">
+        <v-toolbar dark dense :color="$store.getters.themeColor">
             <v-btn icon @click="nav = false">
                 <v-icon large>mdi-close</v-icon>
             </v-btn>
