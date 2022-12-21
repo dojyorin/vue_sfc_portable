@@ -1,13 +1,10 @@
 export const routes = [{
-    match: "*",
-    route: "./application/page/404.vue"
+    route: "*",
+    file: "./application/page/404.vue"
 }, {
-    match: "/",
-    route: "./application/page/home.vue"
+    route: "/",
+    file: "./application/page/home.vue"
 }, {
-    match: "/sub",
-    route: "./application/page/sub.vue"
-}, {
-    match: "/worker",
-    route: "./application/page/worker.vue"
+    route: "/sub",
+    file: "./application/page/sub.vue"
 }];

@@ -36,21 +36,20 @@
             vuetify: new Vuetify(),
 
             components: {
-                "vue": () => loadComponent("./application/page/index.vue")
+                "vue": () => loadComponent("./application/template/root.vue")
             },
 
             router: new VueRouter({
-                routes: routes.map(({match, route})=>{
+                routes: routes.map(({route, file})=>{
                     return {
-                        path: match,
-                        component(){
-                            return loadComponent(route);
-                        }
+                        path: route,
+                        component: () => loadComponent(file)
                     };
                 })
             }),
 
             store: new Vuex.Store({
+                strict: true,
                 state: state,
                 getters: getter,
                 mutations: setter,
