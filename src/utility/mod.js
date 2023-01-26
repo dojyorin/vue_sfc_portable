@@ -1,1 +1,1 @@
-export * from "./simple_utility.min.js";
+export * from "https://github.com/dojyorin/deno_simple_utility/releases/latest/download/universal.min.js";
