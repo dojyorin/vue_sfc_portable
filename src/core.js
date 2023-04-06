@@ -6,24 +6,12 @@ import {fetchExtend, cryptoUuid} from "./utility/mod.js";
 * @property {Record<string, unknown>} extends
 */
 
-const AsyncFunction = (async()=>{}).constructor;
-
-/**
-* @param {string} path
-* @return {Promise<Document>}
-*/
-async function fetchDOM(path){
-    const result = await fetchExtend(path, "text");
-
-    return new DOMParser().parseFromString(result, "text/html");
-}
-
 /**
 * @param {string} path
 * @return {Promise<VueComponent>}
 */
 export async function loadComponent(path){
-    const {head} = await fetchDOM(path);
+    const {head} = new DOMParser().parseFromString(await fetchExtend(path, "text"), "text/html");
     const elements = [...head.children];
 
     /** @type {?HTMLTemplateElement} */
@@ -64,6 +52,6 @@ export async function loadComponent(path){
 
     return {
         template: html ?? "",
-        extends: js ? await new AsyncFunction(js)() : {}
+        extends: js ? await new (async()=>{}).constructor(js)() : {}
     };
 }
