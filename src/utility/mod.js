@@ -1,1 +1,0 @@
-export * from "./deno_simple_utility.mod.universal.min.js";
