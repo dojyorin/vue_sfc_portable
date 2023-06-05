@@ -1,4 +1,4 @@
-import {fetchExtend, cryptoUuid} from "./module/deno_simple_utility.mod.universal.min.js";
+import {fetchExtend, cryptoUuid} from "https://esm.sh/gh/dojyorin/deno_simple_utility@v0.5.2/mod.universal.ts?bundle&target=esnext";
 
 /**
 * @typedef {object} VueComponent
