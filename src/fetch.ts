@@ -3,7 +3,7 @@
 /// <reference lib="dom"/>
 /// <reference lib="dom.iterable"/>
 
-import {type FetchInit, type Component, fetchExtend, randomUuid, defineAsyncComponent} from "./deps.ts";
+import {type FetchInit, type Component, fetchExtend, randomUuid, defineAsyncComponent} from "../deps.ts";
 
 export async function fetchComponent(path:string, option?:FetchInit):Promise<Component>{
     const {head} = new DOMParser().parseFromString(await fetchExtend(path, "text", option), "text/html");
