@@ -4,7 +4,7 @@
 /// <reference lib="dom.iterable"/>
 
 import {type FetchInit, defineAsyncComponent} from "../deps.ts";
-import {fetchComponent} from "./component.ts";
+import {fetchComponent} from "./fetch.ts";
 
 export function fetchAsyncComponent(path:string, option?:FetchInit){
     return defineAsyncComponent(() => fetchComponent(path, option));
