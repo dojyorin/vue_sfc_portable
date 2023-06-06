@@ -18,7 +18,7 @@ export async function fetchComponent(path:string, option?:FetchInit):Promise<Com
         const tag = document.createElement("style");
 
         if(style.hasAttribute("scoped")){
-            const scope = `style-${randomUuid()}`;
+            const scope = `data-v-${randomUuid().split(/-/)[0]}`;
 
             for(const {attributes} of template?.content.querySelectorAll("[class]") ?? []){
                 attributes.setNamedItem(document.createAttribute(scope));
