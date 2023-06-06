@@ -37,7 +37,7 @@ export async function fetchComponent(path:string, option?:FetchInit):Promise<Com
         document.head.appendChild(css);
     }
 
-    const js = script?.innerHTML?.replace(/export +default/, "return");
+    const js = script?.innerHTML?.replace(/export[\r\n\t ]+default/, "return");
 
     return {
         template: template?.innerHTML ?? "",
