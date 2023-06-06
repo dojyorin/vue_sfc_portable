@@ -10,17 +10,17 @@
 </template>
 
 <script>
-    const {defineComponent} = await import("vue");
-    const {fetchAsyncComponent} = await import("./deps.js");
+    const {defineComponent, defineAsyncComponent} = await import("vue");
+    const {asyncComponent} = await import("./deps.js");
 
     export default defineComponent({
         components: {
-            // "ct-notify": () => loadComponent("./application/template/notify.vue"),
-            // "ct-loading": () => loadComponent("./application/template/loading.vue"),
-            // "ct-nav": () => loadComponent("./application/template/nav.vue"),
-            "ct-header": fetchAsyncComponent("./application/template/header.vue"),
-            "ct-page": fetchAsyncComponent("./application/template/page.vue"),
-            "ct-footer": fetchAsyncComponent("./application/template/footer.vue")
+            // "ct-notify": defineAsyncComponent(asyncComponent("./application/template/notify.vue")),
+            // "ct-loading": defineAsyncComponent(asyncComponent("./application/template/loading.vue")),
+            // "ct-nav": defineAsyncComponent(asyncComponent("./application/template/nav.vue")),
+            "ct-header": defineAsyncComponent(asyncComponent("./application/template/header.vue")),
+            "ct-page": defineAsyncComponent(asyncComponent("./application/template/page.vue")),
+            "ct-footer": defineAsyncComponent(asyncComponent("./application/template/footer.vue"))
         }
     });
 </script>

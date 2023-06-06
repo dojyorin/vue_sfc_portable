@@ -1,11 +1,9 @@
 /// <reference no-default-lib="true"/>
 /// <reference lib="esnext"/>
-/// <reference lib="dom"/>
-/// <reference lib="dom.iterable"/>
 
-import {type FetchInit, defineAsyncComponent} from "../deps.ts";
+import {type FetchInit} from "../deps.ts";
 import {fetchComponent} from "./fetch.ts";
 
-export function fetchAsyncComponent(path:string, option?:FetchInit){
-    return defineAsyncComponent(() => fetchComponent(path, option));
+export function asyncComponent(path:string, option?:FetchInit){
+    return () => fetchComponent(path, option);
 }
