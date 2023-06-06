@@ -4,6 +4,6 @@
 import {type FetchInit} from "../deps.ts";
 import {fetchComponent} from "./fetch.ts";
 
-export function asyncComponent(path:string, option?:FetchInit){
+export function fetchAsyncComponent(path:string, option?:FetchInit){
     return () => fetchComponent(path, option);
 }

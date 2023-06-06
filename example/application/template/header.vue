@@ -22,12 +22,12 @@
 </template>
 
 <script>
-    const {defineComponent, defineAsyncComponent} = await import("vue");
-    const {asyncComponent} = await import("./deps.js");
+    import {defineComponent, defineAsyncComponent} from "vue";
+    import {fetchAsyncComponent} from "./deps.js";
 
     export default {
         // components: {
-        //     "ct-menu": defineAsyncComponent(asyncComponent("./application/component/menu.vue"))
+        //     "ct-menu": defineAsyncComponent(fetchAsyncComponent("./application/component/menu.vue"))
         // },
 
         // methods: {

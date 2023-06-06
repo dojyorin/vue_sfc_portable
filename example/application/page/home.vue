@@ -18,7 +18,8 @@
 </template>
 
 <script>
-    const {defineComponent} = await import("vue");
+    import {defineComponent, defineAsyncComponent} from "vue";
+    import {fetchAsyncComponent} from "./deps.js";
 
     export default defineComponent({
         setup(){

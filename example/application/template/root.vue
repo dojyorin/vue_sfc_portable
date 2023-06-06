@@ -10,17 +10,17 @@
 </template>
 
 <script>
-    const {defineComponent, defineAsyncComponent} = await import("vue");
-    const {asyncComponent} = await import("./deps.js");
+    import {defineComponent, defineAsyncComponent} from "vue";
+    import {fetchAsyncComponent} from "./deps.js";
 
     export default defineComponent({
         components: {
-            // "ct-notify": defineAsyncComponent(asyncComponent("./application/template/notify.vue")),
-            // "ct-loading": defineAsyncComponent(asyncComponent("./application/template/loading.vue")),
-            // "ct-nav": defineAsyncComponent(asyncComponent("./application/template/nav.vue")),
-            "ct-header": defineAsyncComponent(asyncComponent("./application/template/header.vue")),
-            "ct-page": defineAsyncComponent(asyncComponent("./application/template/page.vue")),
-            "ct-footer": defineAsyncComponent(asyncComponent("./application/template/footer.vue"))
+            // "ct-notify": defineAsyncComponent(fetchAsyncComponent("./application/template/notify.vue")),
+            // "ct-loading": defineAsyncComponent(fetchAsyncComponent("./application/template/loading.vue")),
+            // "ct-nav": defineAsyncComponent(fetchAsyncComponent("./application/template/nav.vue")),
+            "ct-header": defineAsyncComponent(fetchAsyncComponent("./application/template/header.vue")),
+            "ct-page": defineAsyncComponent(fetchAsyncComponent("./application/template/page.vue")),
+            "ct-footer": defineAsyncComponent(fetchAsyncComponent("./application/template/footer.vue"))
         }
     });
 </script>

@@ -30,8 +30,8 @@
 </template>
 
 <script>
-    const {defineComponent} = await import("vue");
-    const {fetchAsyncComponent} = await import("./deps.js");
+    import {defineComponent, defineAsyncComponent} from "vue";
+    import {fetchAsyncComponent} from "./deps.js";
 
     export default {
         // components: {
