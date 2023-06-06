@@ -44,7 +44,3 @@ export async function fetchComponent(path:string, option?:FetchInit):Promise<Com
         ...js ? await (async()=>{}).constructor(js)() : {}
     };
 }
-
-export function asyncComponent(path:string){
-    return defineAsyncComponent(() => fetchComponent(path));
-}
