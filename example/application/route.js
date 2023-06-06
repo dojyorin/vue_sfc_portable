@@ -1,5 +1,4 @@
-import {createRouter, createWebHashHistory} from "vue-router";
-import {fetchAsyncComponent} from "../deps.js";
+import {createRouter, createWebHashHistory, fetchAsyncComponent} from "../deps.js";
 
 export const route = createRouter({
     history: createWebHashHistory(),

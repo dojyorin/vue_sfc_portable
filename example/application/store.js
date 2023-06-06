@@ -1,4 +1,4 @@
-import {createStore} from "vuex";
+import {createStore} from "../deps.js";
 
 export const store = createStore({
     state(){

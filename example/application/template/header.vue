@@ -22,8 +22,7 @@
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent} from "vue";
-    import {fetchAsyncComponent} from "./deps.js";
+    import {defineComponent, defineAsyncComponent, fetchAsyncComponent} from "./deps.js";
 
     export default {
         // components: {
