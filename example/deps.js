@@ -1,0 +1,1 @@
+export {fetchComponent, fetchAsyncComponent} from "https://esm.sh/gh/dojyorin/template_vue@master/mod.ts?bundle?target=esnext";

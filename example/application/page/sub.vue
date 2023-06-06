@@ -13,7 +13,7 @@
             </v-list-item-content>
 
             <v-list-item-action>
-                <ct-dialog persistent maximize color="purple" title="Dialog" icon="mdi-information-outline" v-model="dialog">
+                <!-- <ct-dialog persistent maximize color="purple" title="Dialog" icon="mdi-information-outline" v-model="dialog">
                     <template #activator>
                         <v-btn icon @click.stop="dialog = true">
                             <v-icon>mdi-information-outline</v-icon>
@@ -24,29 +24,30 @@
                         <v-card-text>Contents</v-card-text>
                     </v-card>
                 </ct-dialog>
-            </v-list-item-action>
+            </v-list-item-action> -->
         </v-list-item>
     </v-list>
 </template>
 
 <script>
-    const {loadComponent} = await import("./core.js");
+    const {defineComponent} = await import("vue");
+    const {fetchAsyncComponent} = await import("./deps.js");
 
     export default {
-        components: {
-            "ct-dialog": () => loadComponent("./application/component/dialog.vue")
-        },
+        // components: {
+        //     "ct-dialog": fetchAsyncComponent("./application/component/dialog.vue")
+        // },
 
-        data(){
-            return {
-                dialog: false
-            };
-        },
+        // data(){
+        //     return {
+        //         dialog: false
+        //     };
+        // },
 
-        async mounted(){
-            this.$store.commit("loadingVisible", true);
-            await new Promise(res => setTimeout(res, 1000));
-            this.$store.commit("loadingVisible", false);
-        }
+        // async mounted(){
+        //     this.$store.commit("loadingVisible", true);
+        //     await new Promise(res => setTimeout(res, 1000));
+        //     this.$store.commit("loadingVisible", false);
+        // }
     };
 </script>

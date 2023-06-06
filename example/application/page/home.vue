@@ -18,16 +18,20 @@
 </template>
 
 <script>
-    export default {
-        methods: {
-            showNotify(){
-                this.$store.commit("notifyContent", {
-                    message: "Test",
-                    color: "success"
-                });
+    const {defineComponent} = await import("vue");
+
+    export default defineComponent({
+        setup(){
+            function showNotify(){
+                // this.$store.commit("notifyContent", {
+                //     message: "Test",
+                //     color: "success"
+                // });
             }
+
+            return {showNotify};
         }
-    };
+    });
 </script>
 
 <style scoped>

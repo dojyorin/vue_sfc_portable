@@ -1,0 +1,67 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="height=device-height,width=device-width,minimum-scale=1,maximum-scale=1,initial-scale=1,user-scalable=no">
+
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FFFFFF">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50%' y='50%' style='dominant-baseline:central;text-anchor:middle;font-size:100px;'>📡</text></svg>">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@3/dist/vuetify.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7/css/materialdesignicons.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=M+PLUS+1+Code:wght@100;200;300;400;500;600;700">
+
+<script type="importmap">
+    {
+        "imports": {
+            "vue": "https://cdn.jsdelivr.net/npm/vue@3/dist/vue.esm-browser.prod.min.js",
+            "vue-router": "https://cdn.jsdelivr.net/npm/vue-router@4/dist/vue-router.esm-browser.min.js",
+            "vuex": "https://cdn.jsdelivr.net/npm/vuex@4/dist/vuex.esm-browser.prod.min.js",
+            "vuetify": "https://cdn.jsdelivr.net/npm/vuetify@3/dist/vuetify.esm.min.js",
+            "@vue/devtools-api": "https://cdn.jsdelivr.net/npm/@vue/devtools-api@6/lib/esm/index.min.js"
+        }
+    }
+</script>
+
+<script async type="module">
+    import {createApp} from "vue";
+    import {createVuetify} from "vuetify";
+
+    import {ferchComponent} from "./deps.js";
+
+    import {route} from "./application/route.js";
+    import {store} from "./application/store.js";
+
+    const vue = createApp(await ferchComponent("./application/template/root.vue"));
+    const vuetify = createVuetify();
+
+    vue.use(route);
+    vue.use(store);
+    vue.use(vuetify);
+    vue.mount(document.getElementById("vue"));
+</script>
+
+<style>
+    ::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    :focus {
+        outline: none !important;
+    }
+
+    * {
+        font-family: "M PLUS 1 Code" !important;
+    }
+
+    .v-btn {
+        text-transform: none !important;
+        letter-spacing: normal !important;
+        text-indent: 0 !important;
+    }
+</style>
+
+<title>Application</title>
+
+<div id="vue"></div>
