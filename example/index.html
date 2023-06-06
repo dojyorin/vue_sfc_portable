@@ -28,12 +28,12 @@
     import {createApp} from "vue";
     import {createVuetify} from "vuetify";
 
-    import {ferchComponent} from "./deps.js";
+    import {fetchComponent} from "./deps.js";
 
     import {route} from "./application/route.js";
     import {store} from "./application/store.js";
 
-    const vue = createApp(await ferchComponent("./application/template/root.vue"));
+    const vue = createApp(await fetchComponent("./application/template/root.vue"));
     const vuetify = createVuetify();
 
     vue.use(route);
