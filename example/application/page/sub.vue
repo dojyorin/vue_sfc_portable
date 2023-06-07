@@ -1,7 +1,5 @@
 <template>
     <v-list>
-        <v-subheader>List</v-subheader>
-
         <v-list-item>
             <template #prepend>
                 <v-icon>mdi-account</v-icon>
