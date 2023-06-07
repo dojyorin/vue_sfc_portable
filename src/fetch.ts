@@ -9,22 +9,21 @@ const AsyncFunction = <FunctionConstructor>(async function(){}).constructor;
 
 export async function fetchComponent(path:string, option?:FetchInit):Promise<Component>{
     const {head: {children: [...elements]}} = new DOMParser().parseFromString(await fetchExtend(path, "text", option), "text/html");
+    const templateComponent = <HTMLTemplateElement | undefined>elements.find(e => e instanceof HTMLTemplateElement);
+    const scriptComponent = <HTMLScriptElement | undefined>elements.find(e => e instanceof HTMLScriptElement);
+    const styleComponent = <HTMLStyleElement | undefined>elements.find(e => e instanceof HTMLStyleElement);
 
-    const template = <HTMLTemplateElement | undefined>elements.find(e => e instanceof HTMLTemplateElement);
-    const script = <HTMLScriptElement | undefined>elements.find(e => e instanceof HTMLScriptElement);
-    const style = <HTMLStyleElement | undefined>elements.find(e => e instanceof HTMLStyleElement);
+    if(styleComponent){
+        const element = document.createElement("style");
 
-    if(style){
-        const tag = document.createElement("style");
-
-        if(style.hasAttribute("scoped")){
+        if(styleComponent.hasAttribute("scoped")){
             const scope = `data-v-${randomUuid().split(/-/)[0]}`;
 
-            for(const {attributes} of template?.content.querySelectorAll("[class]") ?? []){
+            for(const {attributes} of templateComponent?.content.querySelectorAll("[class]") ?? []){
                 attributes.setNamedItem(document.createAttribute(scope));
             }
 
-            for(const rule of style.sheet?.cssRules ?? []){
+            for(const rule of styleComponent.sheet?.cssRules ?? []){
                 if(!(rule instanceof CSSStyleRule)){
                     continue;
                 }
@@ -33,40 +32,49 @@ export async function fetchComponent(path:string, option?:FetchInit):Promise<Com
             }
         }
 
-        for(const {cssText} of style.sheet?.cssRules ?? []){
-            tag.innerHTML += `${cssText}\n`;
+        for(const {cssText} of styleComponent.sheet?.cssRules ?? []){
+            element.innerHTML += `${cssText}\n`;
         }
 
-        document.head.appendChild(tag);
+        document.head.appendChild(element);
     }
 
-    const js = script?.innerHTML.replace(/import[^;]+from[^;]+;/gs, (match)=>{
-        const source = trimExtend(match.replace(/[\n\t]/g, " "));
+    const js = scriptComponent?.innerHTML.replace(/import[^;]+from[^;]+;/g, (sub)=>{
+        const source = trimExtend(sub.replace(/[\n\t]/g, " "));
 
-        const json = /assert{type:["']json["']};$/.test(source.replace(/ /g, ""));
-        const [, _name, _path] = source.match(/import(.+?)from *["'](.+?)["']/)?.map(v => v.trim()) ?? [];
+        const matchAssert = /assert {0,1}{ {0,1}type {0,1}: {0,1}["'`][a-zA-Z]+["'`] {0,1}}/;
+        const matchExport = /[a-zA-Z_$][a-zA-Z0-9_$]+/;
 
-        const name = (()=>{
-            if(/^\*/.test(_name)){
-                return _name.match(/as ([a-zA-Z_$][a-zA-Z0-9_$]+)/)?.[1] ?? "";
+        const assert = source.match(matchAssert)?.[0] ?? "";
+        const [part, name] = source.replace(matchAssert, "").replace(/^import/, "").replace(/["'] {0,1};$/, "").split(/from {0,1}["']/, 2).map(v => v.trim());
+
+        const fragment = (()=>{
+            if(/^\*/.test(part)){
+                return part.match(matchExport)?.[0] ?? "";
             }
-            else if(/^[a-zA-Z_$]/.test(_name)){
-                return `{default:${_name.match(/^([a-zA-Z_$][a-zA-Z0-9_$]+)/)?.[1] ?? ""}}`;
+            else if(/^[a-zA-Z_$]/.test(part)){
+                return `{default: ${part.match(matchExport)?.[0] ?? ""}}`;
             }
-            else if(/^{/.test(_name)){
-                return `{${_name.match(/{(.+?)}/)?.[1].replace(/ as /, ":") ?? ""}}`;
+            else if(/^{/.test(part)){
+                return part.replace(/ as /, ": ");
             }
             else{
                 return "";
             }
         })();
 
-        return `const ${name} = await import('${_path}'${json ? ", {assert: {type: 'json'}}" : ""});`;
-    })
-    .replace(/export[\r\n\t ]+default/, "return")
-    .replace(/"\.{0,2}\/[^"]+"|'\.{0,2}\/[^']+'|`\.{0,2}\/[^`]+`/g, v => new URL(v.replace(/^["'`]/, "").replace(/["'`]$/, ""), new URL(path, location.href)).href);
+        return `const ${fragment} = await import("${name}", {${assert}});`;
+    }).replace(/"\.{0,2}\/(\\"|[^"])+"|'\.{0,2}\/(\\'|[^'])+'|`\.{0,2}\/(\\`|[^`])+`/g, (sub)=>{
+        const [quote] = sub;
+        const name = sub.replace(/^["'`]/, "").replace(/["'`]$/, "");
+
+        return `${quote}${decodeURIComponent(new URL(name, new URL(path, location.href)).href).replace(new RegExp(quote, "g"), `\\${quote}`)}${quote}`
+    }).replace(/export[\r\n\t ]+default/g, ()=>{
+        return "return";
+    }) ?? "";
+
     return {
-        template: template?.innerHTML ?? "",
-        ...js ? await new AsyncFunction(js)() : {}
+        template: templateComponent?.innerHTML ?? "",
+        ...await new AsyncFunction(js)() ?? {}
     };
 }

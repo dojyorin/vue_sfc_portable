@@ -22,11 +22,11 @@
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent, fetchAsyncComponent} from "./deps.js";
+    import {defineComponent, defineAsyncComponent, fetchAsyncComponent} from "../../deps.js";
 
     export default {
         // components: {
-        //     "ct-menu": defineAsyncComponent(fetchAsyncComponent("./application/component/menu.vue"))
+        //     "ct-menu": defineAsyncComponent(fetchAsyncComponent("./menu.vue"))
         // },
 
         // methods: {

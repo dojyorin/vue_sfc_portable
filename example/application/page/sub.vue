@@ -30,11 +30,11 @@
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent, fetchAsyncComponent} from "./deps.js";
+    import {defineComponent, defineAsyncComponent, fetchAsyncComponent} from "../../deps.js";
 
     export default {
         // components: {
-        //     "ct-dialog": fetchAsyncComponent("./application/component/dialog.vue")
+        //     "ct-dialog": fetchAsyncComponent("../component/dialog.vue")
         // },
 
         // data(){

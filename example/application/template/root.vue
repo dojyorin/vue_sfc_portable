@@ -10,16 +10,16 @@
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent, fetchAsyncComponent} from "./deps.js";
+    import {defineComponent, defineAsyncComponent, fetchAsyncComponent} from "../../deps.js";
 
     export default defineComponent({
         components: {
-            // "ct-notify": defineAsyncComponent(fetchAsyncComponent("./application/template/notify.vue")),
-            // "ct-loading": defineAsyncComponent(fetchAsyncComponent("./application/template/loading.vue")),
-            // "ct-nav": defineAsyncComponent(fetchAsyncComponent("./application/template/nav.vue")),
-            "ct-header": defineAsyncComponent(fetchAsyncComponent("./application/template/header.vue")),
-            "ct-page": defineAsyncComponent(fetchAsyncComponent("./application/template/page.vue")),
-            "ct-footer": defineAsyncComponent(fetchAsyncComponent("./application/template/footer.vue"))
+            // "ct-notify": defineAsyncComponent(fetchAsyncComponent("./notify.vue")),
+            // "ct-loading": defineAsyncComponent(fetchAsyncComponent("./loading.vue")),
+            // "ct-nav": defineAsyncComponent(fetchAsyncComponent("./nav.vue")),
+            "ct-header": defineAsyncComponent(fetchAsyncComponent("./header.vue")),
+            "ct-page": defineAsyncComponent(fetchAsyncComponent("./page.vue")),
+            "ct-footer": defineAsyncComponent(fetchAsyncComponent("./footer.vue"))
         }
     });
 </script>
