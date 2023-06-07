@@ -4,7 +4,7 @@ export const route = createRouter({
     history: createWebHashHistory(),
     routes: [{
         path : "/",
-        component: fetchComponent(import.meta.resolve("./page/home.vue"))
+        component: fetchComponent(import.meta.resolve("./page/index.vue"))
     }, {
         path : "/sub",
         component: fetchComponent(import.meta.resolve("./page/sub.vue"))
