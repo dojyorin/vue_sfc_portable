@@ -3,7 +3,7 @@
 /// <reference lib="dom"/>
 /// <reference lib="dom.iterable"/>
 
-import {type FetchInit, type Component, fetchExtend, randomUuid, trimExtend} from "../deps.ts";
+import {type Component, randomUuid, trimExtend} from "../deps.ts";
 
 const AsyncFunction = <FunctionConstructor>(async function(){}).constructor;
 

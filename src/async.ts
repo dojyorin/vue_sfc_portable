@@ -1,9 +1,11 @@
 /// <reference no-default-lib="true"/>
 /// <reference lib="esnext"/>
 
-import {type FetchInit} from "../deps.ts";
-import {fetchComponent} from "./fetch.ts";
+import {type Component, type FetchInit, fetchExtend} from "../deps.ts";
+import {parseComponent} from "./parse.ts";
 
-export function fetchAsyncComponent(path:string, option?:FetchInit){
-    return () => fetchComponent(path, option);
+type LazyComponent = () => Promise<Component>;
+
+export function fetchComponent(path:string, option?:FetchInit):LazyComponent{
+    return async () => parseComponent(await fetchExtend(path, "text", option));
 }
