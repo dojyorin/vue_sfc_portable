@@ -43,9 +43,9 @@ export async function fetchComponent(path:string, option?:FetchInit):Promise<Com
     const js = script?.innerHTML.replace(/import[^;]+from[^;]+;/gs, (match)=>{
         const source = trimExtend(match.replace(/[\n\t]/g, " "));
 
-        const [, name, path] = source.match(/import(.+?)from *["'](.+?)["']/)?.map(v => v.trim()) ?? [];
+        const [, name, _path] = source.match(/import(.+?)from *["'](.+?)["']/)?.map(v => v.trim()) ?? [];
         const json = /assert{type:["']json["']};$/.test(source.replace(/ /g, ""));
-        const npm = !/^\.{1,2}\/|^https{0,1}:/i.test(path);
+        const npm = !/^\.{0,2}\/|^https{0,1}:/i.test(_path);
 
         const n = (()=>{
             if(/^\*/.test(name)){
@@ -62,7 +62,7 @@ export async function fetchComponent(path:string, option?:FetchInit):Promise<Com
             }
         })();
 
-        return `const ${n} = await import('${npm ? path : new URL(path, location.href)}'${json ? ", {assert: {type: 'json'}}" : ""});`;
+        return `const ${n} = await import('${npm ? _path : new URL(_path, new URL(path, location.href))}'${json ? ", {assert: {type: 'json'}}" : ""});`;
     }).replace(/export[\r\n\t ]+default/, "return");
 
     return {
