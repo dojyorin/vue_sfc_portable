@@ -3,17 +3,15 @@
         <v-subheader>List</v-subheader>
 
         <v-list-item>
-            <v-list-item-icon>
+            <template #prepend>
                 <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
+            </template>
 
-            <v-list-item-content>
-                <v-list-item-title>Dialog</v-list-item-title>
-                <v-list-item-subtitle>Subtitle</v-list-item-subtitle>
-            </v-list-item-content>
+            <v-list-item-title>Title</v-list-item-title>
+            <v-list-item-subtitle>Sub</v-list-item-subtitle>
 
-            <v-list-item-action>
-                <!-- <ct-dialog persistent maximize color="purple" title="Dialog" icon="mdi-information-outline" v-model="dialog">
+            <!-- <v-list-item-action>
+                <ct-dialog persistent maximize color="purple" title="Dialog" icon="mdi-information-outline" v-model="dialog">
                     <template #activator>
                         <v-btn icon @click.stop="dialog = true">
                             <v-icon>mdi-information-outline</v-icon>
