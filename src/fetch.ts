@@ -45,7 +45,7 @@ export async function fetchComponent(path:string, option?:FetchInit):Promise<Com
 
         const [, name, _path] = source.match(/import(.+?)from *["'](.+?)["']/)?.map(v => v.trim()) ?? [];
         const json = /assert{type:["']json["']};$/.test(source.replace(/ /g, ""));
-        const npm = !/^\.{0,2}\/|^https{0,1}:/i.test(_path);
+        const npm = !/^\.{0,2}\/|^https{0,1}:\/\//i.test(_path); // URL post process external.
 
         const n = (()=>{
             if(/^\*/.test(name)){
@@ -64,7 +64,11 @@ export async function fetchComponent(path:string, option?:FetchInit):Promise<Com
 
         return `const ${n} = await import('${npm ? _path : new URL(_path, new URL(path, location.href))}'${json ? ", {assert: {type: 'json'}}" : ""});`;
     }).replace(/export[\r\n\t ]+default/, "return");
+js.replace(/"\.{0,2}\/[^"]+"|''/g, (match)=>{
+    const _p = match.replace(/^["'`]/, "").replace(/["'`]$/, "");
 
+    return new URL(_p, new URL(path, location.href)).href;
+});
     return {
         template: template?.innerHTML ?? "",
         ...js ? await new AsyncFunction(js)() : {}
