@@ -64,7 +64,7 @@ export async function fetchComponent(path:string, option?:FetchInit):Promise<Com
         return `const ${name} = await import('${_path}'${json ? ", {assert: {type: 'json'}}" : ""});`;
     })
     .replace(/export[\r\n\t ]+default/, "return")
-    .replace(/"\.{0,2}\/[^"]+"|'\.{0,2}\/[^']+'|`\.{0,2}\/[^`]+`/g, v => new URL(v.replace(/^["'`]/, "").replace(/["'`]$/, ""), new URL(path, location)).href);
+    .replace(/"\.{0,2}\/[^"]+"|'\.{0,2}\/[^']+'|`\.{0,2}\/[^`]+`/g, v => new URL(v.replace(/^["'`]/, "").replace(/["'`]$/, ""), new URL(path, location.href)).href);
     return {
         template: template?.innerHTML ?? "",
         ...js ? await new AsyncFunction(js)() : {}
