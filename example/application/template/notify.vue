@@ -1,22 +1,18 @@
 <template>
-    <v-snackbar dark top centered :color="$store.getters.notifyContent.color" v-model="notify">
-        <v-icon left>mdi-bell-ring-outline</v-icon>
-        <span>{{$store.getters.notifyContent.message}}</span>
+    <v-snackbar position="fixed" location="top" offset="" :color="message.color" value>
+        <v-icon left v-if="message.icon">{{message.icon}}</v-icon>
+        <span>{{message.text}}</span>
     </v-snackbar>
 </template>
 
 <script>
-    export default {
-        computed: {
-            notify: {
-                get(){
-                    return this.$store.getters.notifyVisible;
-                },
+    import {inject} from "../../deps.js";
 
-                set(v){
-                    this.$store.commit("notifyVisible", v);
-                }
-            }
+    export default {
+        setup(){
+            const message = inject("message");
+
+            return {message};
         }
     };
 </script>
