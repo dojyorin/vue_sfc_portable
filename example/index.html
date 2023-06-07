@@ -29,7 +29,7 @@
     import {route} from "./application/route.js";
     import {store} from "./application/store.js";
 
-    const vue = createApp(await fetchComponent("./application/layout.vue"));
+    const vue = createApp(await fetchComponent("./application/index.vue"));
     const vuetify = createVuetify();
 
     vue.use(route);

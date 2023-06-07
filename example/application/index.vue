@@ -27,14 +27,13 @@
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent, fetchAsyncComponent, ref} from "../../deps.js";
+    import {defineComponent, defineAsyncComponent, fetchAsyncComponent, ref} from "../deps.js";
 
     export default defineComponent({
         components: {
-            "x-nav": defineAsyncComponent(fetchAsyncComponent("./nav.vue")),
-            "x-header": defineAsyncComponent(fetchAsyncComponent("./header.vue")),
-            "x-page": defineAsyncComponent(fetchAsyncComponent("./page.vue")),
-            "x-footer": defineAsyncComponent(fetchAsyncComponent("./footer.vue"))
+            "x-nav": defineAsyncComponent(fetchAsyncComponent("./layout/nav.vue")),
+            "x-header": defineAsyncComponent(fetchAsyncComponent("./layout/header.vue")),
+            "x-footer": defineAsyncComponent(fetchAsyncComponent("./layout/footer.vue"))
         },
         setup(){
             const nav = ref(false);
