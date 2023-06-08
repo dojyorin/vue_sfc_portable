@@ -5,13 +5,13 @@
         </v-overlay>
 
         <v-navigation-drawer floating temporary v-model="nav">
-            <v-toolbar density="compact" color="blue">
+            <v-toolbar density="compact" color="blue-darken-1">
                 <v-btn icon="mdi-close" @click="nav = false"></v-btn>
             </v-toolbar>
             <x-nav></x-nav>
         </v-navigation-drawer>
 
-        <v-app-bar density="compact" color="blue">
+        <v-app-bar density="compact" color="blue-darken-1">
             <v-app-bar-nav-icon @click="nav = !nav"></v-app-bar-nav-icon>
             <x-header></x-header>
         </v-app-bar>
@@ -20,14 +20,14 @@
             <router-view></router-view>
         </v-main>
 
-        <v-footer app dark tile padless color="blue">
+        <v-footer app color="blue-darken-1">
             <x-footer></x-footer>
         </v-footer>
     </v-app>
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent, fetchComponent, ref} from "../deps.js";
+    import {defineComponent, defineAsyncComponent, useStore, fetchComponent, ref, computed} from "../deps.js";
 
     export default defineComponent({
         components: {
@@ -36,9 +36,20 @@
             "x-footer": defineAsyncComponent(fetchComponent("./layout/footer.vue"))
         },
         setup(){
+            const store = useStore();
+
+            const loading = computed({
+                get: () => store.getters.loading,
+                set: v => store.commit("overlay", v)
+            });
+
+            onMounted(()=>{
+                store.commit("overlay", false);
+            });
+
             const nav = ref(false);
 
-            return {nav};
+            return {loading, nav};
         }
     });
 </script>
