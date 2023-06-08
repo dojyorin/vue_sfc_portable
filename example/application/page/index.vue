@@ -9,13 +9,14 @@
                     <v-card-text>Example</v-card-text>
 
                     <v-card-actions>
-                        <v-btn variant="flat" color="green" class="reflect" @click="notify = true">Notify</v-btn>
-                        <x-notify color="red" v-model="notify">test</x-notify>
+                        <v-btn variant="flat" color="red" class="reflect" @click="notify = true">Notify</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
         </v-row>
     </v-container>
+
+    <x-notify color="red" v-model="notify">test</x-notify>
 </template>
 
 <script>
