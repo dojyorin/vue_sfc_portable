@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent, fetchComponent, ref} from "../../deps.js";
+    import {defineComponent, defineAsyncComponent, ref, fetchComponent} from "../../deps.js";
 
     export default defineComponent({
         components: {
