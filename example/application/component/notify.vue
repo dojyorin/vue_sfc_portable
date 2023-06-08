@@ -12,8 +12,8 @@
     import {computed} from "../../deps.js";
 
     export default {
-        emits: ["update:modelValue"],
         props: ["modelValue", "color", "icon"],
+        emits: ["update:modelValue"],
         setup(props, context){
             const enable = computed({
                 get: () => props.modelValue,
