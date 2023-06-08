@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent, useStore, fetchComponent, ref, computed} from "../deps.js";
+    import {defineComponent, defineAsyncComponent, useStore, ref, computed, onMounted, fetchComponent} from "../deps.js";
 
     export default defineComponent({
         components: {
