@@ -78,3 +78,16 @@ export function parseComponent(sfc:string):Component{
         ...await new AsyncFunction(js)() ?? {}
     };
 }
+
+// WIP
+function transformScript({innerHTML}:HTMLScriptElement){
+    const transforms:[RegExp, (sub:string) => string][] = [
+        []
+    ];
+
+    return transforms.reduce((v, [r, f]) => v.replace(r, f), innerHTML);
+}
+
+function transformStyle(template:HTMLTemplateElement, style:HTMLStyleElement){
+
+}
