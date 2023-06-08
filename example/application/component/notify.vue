@@ -1,18 +1,26 @@
 <template>
-    <v-snackbar position="fixed" location="top" offset="" :color="message.color" value>
-        <v-icon left v-if="message.icon">{{message.icon}}</v-icon>
-        <span>{{message.text}}</span>
+    <v-snackbar position="fixed" location="top" :color="color" v-model="enable">
+        <slot></slot>
+
+        <template #actions>
+            <v-btn ripple density="comfortable" icon="mdi-close" @click="enable = false"></v-btn>
+        </template>
     </v-snackbar>
 </template>
 
 <script>
-    import {inject} from "../../deps.js";
+    import {computed} from "../../deps.js";
 
     export default {
-        setup(){
-            const message = inject("message");
+        emits: ["update:modelValue"],
+        props: ["modelValue", "color", "icon"],
+        setup(props, context){
+            const enable = computed({
+                get: () => props.modelValue,
+                set: v => context.emit("update:modelValue", v)
+            });
 
-            return {message};
+            return {enable};
         }
     };
 </script>

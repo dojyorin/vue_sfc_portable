@@ -9,7 +9,8 @@
                     <v-card-text>Example</v-card-text>
 
                     <v-card-actions>
-                        <v-btn dark color="green" class="reflect" @click="showNotify()">Notify</v-btn>
+                        <v-btn variant="flat" color="green" class="reflect" @click="notify = true">Notify</v-btn>
+                        <x-notify color="red" v-model="notify">test</x-notify>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -18,18 +19,16 @@
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent, fetchComponent} from "../../deps.js";
+    import {defineComponent, defineAsyncComponent, fetchComponent, ref} from "../../deps.js";
 
     export default defineComponent({
+        components: {
+            "x-notify": defineAsyncComponent(fetchComponent("../component/notify.vue"))
+        },
         setup(){
-            function showNotify(){
-                // this.$store.commit("notifyContent", {
-                //     message: "Test",
-                //     color: "success"
-                // });
-            }
+            const notify = ref(false);
 
-            return {showNotify};
+            return {notify};
         }
     });
 </script>
