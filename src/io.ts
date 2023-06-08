@@ -28,10 +28,10 @@ export function importComponent(sfc:string):SFCPart{
 }
 
 export async function exportComponent({template, script, style}:SFCPart):Promise<Component>{
-    if(element?.sheet?.cssRules){
+    if(style?.sheet?.cssRules){
         const element = document.createElement("style");
 
-        for(const {cssText} of element.sheet.cssRules){
+        for(const {cssText} of style.sheet.cssRules){
             element.innerHTML += `${cssText}\n`;
         }
 
