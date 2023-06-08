@@ -25,16 +25,8 @@
 </script>
 
 <script async type="module">
-    import {createApp, createVuetify, fetchComponent} from "./deps.js";
-    import {route} from "./application/route.js";
-    import {store} from "./application/store.js";
+    import {vue} from "./application/vue.js";
 
-    const vue = createApp(await fetchComponent("./application/main.vue")());
-    const vuetify = createVuetify();
-
-    vue.use(route);
-    vue.use(store);
-    vue.use(vuetify);
     vue.mount("#vue");
 </script>
 
