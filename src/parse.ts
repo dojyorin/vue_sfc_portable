@@ -64,7 +64,7 @@ export function parseComponent(sfc:string):Component{
         })();
 
         return `const ${fragment} = await import("${name}", {${assert}});`;
-    }).replace(/"\.{0,2}\/(\\"|[^"])+"|'\.{0,2}\/(\\'|[^'])+'|`\.{0,2}\/(\\`|[^`])+`/g, (sub)=>{
+    }).replace(/"\.{0,2}\/(\\"|[^"\r\n\t ])+"|'\.{0,2}\/(\\'|[^'\r\n\t ])+'|`\.{0,2}\/(\\`|[^`\r\n\t ])+`/g, (sub)=>{
         const [quote] = sub;
         const name = sub.replace(/^["'`]/, "").replace(/["'`]$/, "");
 
