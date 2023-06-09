@@ -1,8 +1,8 @@
 <template>
-    <v-navigation-drawer floating temporary v-model="nav">
+    <v-navigation-drawer floating temporary v-model="model">
         <template #prepend>
             <v-toolbar density="compact" color="primary">
-                <v-btn icon="mdi-close" @click="nav = false"></v-btn>
+                <v-btn icon="mdi-close" @click="model = false"></v-btn>
             </v-toolbar>
         </template>
 
@@ -22,15 +22,15 @@
     import {computed} from "../../deps.js";
 
     export default {
-        props: ["nav"],
-        emits: ["update:nav"],
+        props: ["modelValue"],
+        emits: ["update:modelValue"],
         setup(props, context){
-            const nav = computed({
-                get: () => props.nav,
-                set: v => context.emit("update:nav", v)
+            const model = computed({
+                get: () => props.modelValue,
+                set: v => context.emit("update:modelValue", v)
             });
 
-            return {nav};
+            return {model};
         }
     };
 </script>

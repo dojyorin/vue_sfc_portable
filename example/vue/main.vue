@@ -4,7 +4,7 @@
             <v-progress-circular indeterminate size="60" width="4" color="primary"></v-progress-circular>
         </v-overlay>
 
-        <x-navigation v-model:nav="nav"></x-navigation>
+        <x-navigation v-model="nav"></x-navigation>
 
         <x-header v-model:nav="nav"></x-header>
 
