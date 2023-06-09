@@ -24,7 +24,7 @@ export const store = createStore({
         reset(s){
             s.count = 0;
         },
-        overlay(s, v){
+        loading(s, v){
             s.loading = v;
         }
     }
