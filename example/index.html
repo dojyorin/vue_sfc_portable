@@ -25,7 +25,18 @@
 </script>
 
 <script async type="module">
-    import {vue} from "./application/vue.js";
+    import {createApp, fetchComponent} from "./deps.js";
+    import {route} from "./vue/route.js";
+    import {store} from "./vue/store.js";
+    import {vuetify} from "./vue/vuetify.js";
+    import {component} from "./vue/component.js";
+
+    const vue = createApp(await fetchComponent("./vue/main.vue")());
+
+    vue.use(route);
+    vue.use(store);
+    vue.use(vuetify);
+    vue.use(component);
 
     vue.mount("#vue");
 </script>
