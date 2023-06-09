@@ -1,9 +1,9 @@
 <template>
-    <v-snackbar position="fixed" location="top" :color="color" v-model="enable">
+    <v-snackbar position="fixed" location="top" :color="color" v-model="model">
         <slot></slot>
 
         <template #actions>
-            <v-btn ripple density="comfortable" icon="mdi-close" @click="enable = false"></v-btn>
+            <v-btn ripple density="comfortable" icon="mdi-close" @click="model = false"></v-btn>
         </template>
     </v-snackbar>
 </template>
@@ -15,12 +15,12 @@
         props: ["modelValue", "color", "icon"],
         emits: ["update:modelValue"],
         setup(props, context){
-            const enable = computed({
+            const model = computed({
                 get: () => props.modelValue,
                 set: v => context.emit("update:modelValue", v)
             });
 
-            return {enable};
+            return {model};
         }
     };
 </script>

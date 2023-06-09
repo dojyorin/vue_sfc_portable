@@ -4,27 +4,15 @@
             <v-progress-circular indeterminate size="60" width="4" color="primary"></v-progress-circular>
         </v-overlay>
 
-        <v-navigation-drawer floating temporary v-model="nav">
-            <v-toolbar density="compact" color="primary">
-                <v-btn icon="mdi-close" @click="nav = false"></v-btn>
-            </v-toolbar>
+        <x-navigation v-model:nav="nav"></x-navigation>
 
-            <x-nav></x-nav>
-        </v-navigation-drawer>
-
-        <v-app-bar density="compact" color="primary">
-            <v-app-bar-nav-icon @click="nav = !nav"></v-app-bar-nav-icon>
-
-            <x-header></x-header>
-        </v-app-bar>
+        <x-header v-model:nav="nav"></x-header>
 
         <v-main>
             <router-view></router-view>
         </v-main>
 
-        <v-footer app color="primary">
-            <x-footer></x-footer>
-        </v-footer>
+        <x-footer></x-footer>
     </v-app>
 </template>
 
@@ -33,23 +21,23 @@
 
     export default defineComponent({
         components: {
-            "x-nav": defineAsyncComponent(fetchComponent("./layout/nav.vue")),
             "x-header": defineAsyncComponent(fetchComponent("./layout/header.vue")),
-            "x-footer": defineAsyncComponent(fetchComponent("./layout/footer.vue"))
+            "x-footer": defineAsyncComponent(fetchComponent("./layout/footer.vue")),
+            "x-navigation": defineAsyncComponent(fetchComponent("./layout/navigation.vue"))
         },
         setup(){
             const store = useStore();
 
             const loading = computed({
                 get: () => store.getters.loading,
-                set: v => store.commit("overlay", v)
-            });
-
-            onMounted(()=>{
-                store.commit("overlay", false);
+                set: v => store.commit("loading", v)
             });
 
             const nav = ref(false);
+
+            onMounted(()=>{
+                store.commit("loading", false);
+            });
 
             return {loading, nav};
         }
