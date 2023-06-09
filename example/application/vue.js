@@ -9,4 +9,6 @@ vue.use(route);
 vue.use(store);
 vue.use(vuetify);
 
+vue.component("x-notify", await fetchComponent(import.meta.resolve("../component/notify.vue"))());
+
 export {vue};

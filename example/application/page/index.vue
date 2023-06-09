@@ -20,12 +20,9 @@
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent, ref, fetchComponent} from "../../deps.js";
+    import {defineComponent, ref} from "../../deps.js";
 
     export default defineComponent({
-        components: {
-            "x-notify": defineAsyncComponent(fetchComponent("../component/notify.vue"))
-        },
         setup(){
             const notify = ref(false);
 
