@@ -3,13 +3,13 @@ import {createRouter, createWebHashHistory, fetchComponent} from "../deps.js";
 export const route = createRouter({
     history: createWebHashHistory(),
     routes: [{
-        path : "/",
+        path: "/",
         component: fetchComponent(import.meta.resolve("./page/index.vue"))
     }, {
-        path : "/sub",
+        path: "/sub",
         component: fetchComponent(import.meta.resolve("./page/sub.vue"))
     }, {
-        path : "/:catchAll(.*)",
+        path: "/:catchAll(.*)",
         component: fetchComponent(import.meta.resolve("./page/404.vue"))
     }]
 });
