@@ -4,8 +4,8 @@
 /// <reference lib="dom.iterable"/>
 
 import {type Component, type FetchInit, fetchExtend} from "../deps.ts";
-import {importComponent, exportComponent} from "./io.ts";
-import {convertJS, convertCSS, convertPath} from "./convert.ts";
+import {importComponent, exportComponent} from "./interface.ts";
+import {importDynamic, exportReturn, relativePath, scopedStyle} from "./transpile.ts";
 
 type LazyComponent = () => Promise<Component>;
 
@@ -14,12 +14,13 @@ export function fetchComponent(path:string, option?:FetchInit):LazyComponent{
         const {template, script, style} = importComponent(await fetchExtend(path, "text", option));
 
         if(script){
-            convertJS(script);
-            convertPath(script, path);
+            importDynamic(script);
+            exportReturn(script);
+            relativePath(script, path);
         }
 
         if(style){
-            convertCSS(template, style);
+            scopedStyle(template, style);
         }
 
         return exportComponent({template, script, style});
