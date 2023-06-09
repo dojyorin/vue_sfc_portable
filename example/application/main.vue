@@ -1,18 +1,20 @@
 <template>
     <v-app>
         <v-overlay persistent no-click-animation class="justify-center align-center" v-model="loading">
-            <v-progress-circular indeterminate size="60" width="4" color="blue-darken-1"></v-progress-circular>
+            <v-progress-circular indeterminate size="60" width="4" color="primary"></v-progress-circular>
         </v-overlay>
 
         <v-navigation-drawer floating temporary v-model="nav">
-            <v-toolbar density="compact" color="blue-darken-1">
+            <v-toolbar density="compact" color="primary">
                 <v-btn icon="mdi-close" @click="nav = false"></v-btn>
             </v-toolbar>
+
             <x-nav></x-nav>
         </v-navigation-drawer>
 
-        <v-app-bar density="compact" color="blue-darken-1">
+        <v-app-bar density="compact" color="primary">
             <v-app-bar-nav-icon @click="nav = !nav"></v-app-bar-nav-icon>
+
             <x-header></x-header>
         </v-app-bar>
 
@@ -20,7 +22,7 @@
             <router-view></router-view>
         </v-main>
 
-        <v-footer app color="blue-darken-1">
+        <v-footer app color="primary">
             <x-footer></x-footer>
         </v-footer>
     </v-app>
