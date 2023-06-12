@@ -28,18 +28,18 @@
         setup(){
             const store = useStore();
 
+            const nav = ref(false);
+
             const loading = computed({
                 get: () => store.getters.loading,
                 set: v => store.commit("loading", v)
             });
 
-            const nav = ref(false);
-
             onMounted(()=>{
                 store.commit("loading", false);
             });
 
-            return {loading, nav};
+            return {nav, loading};
         }
     });
 </script>

@@ -20,16 +20,16 @@
 </template>
 
 <script>
-    import {defineComponent, ref, useStore} from "../../deps.js";
+    import {defineComponent, ref, computed, useStore} from "../../deps.js";
 
     export default defineComponent({
         setup(){
             const store = useStore();
 
-            const countx = computed(() => store.getters.count);
-
             const count = ref(0);
             const notify = ref(false);
+
+            const countx = computed(() => store.getters.count);
 
             function increment(){
                 count.value++;
@@ -41,7 +41,7 @@
                 notify.value = true;
             }
 
-            return {countx, count, notify, increment, incrementx};
+            return {count, notify, countx, increment, incrementx};
         }
     });
 </script>

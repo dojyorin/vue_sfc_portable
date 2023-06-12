@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import {defineComponent, ref, useStore} from "../../deps.js";
+    import {defineComponent, ref, computed, useStore} from "../../deps.js";
 
     export default defineComponent({
         setup(){
