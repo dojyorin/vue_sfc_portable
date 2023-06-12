@@ -3,7 +3,7 @@
 /// <reference lib="dom"/>
 /// <reference lib="dom.iterable"/>
 
-import {randomUuid, trimExtend} from "../deps.ts";
+import {randomBin, hexEncode, trimExtend} from "../deps.ts";
 
 export function importDynamic(script:HTMLScriptElement){
     script.innerHTML = script.innerHTML.replace(/import[^;]+from[^;]+;/g, (sub)=>{
@@ -54,7 +54,7 @@ export function scopedStyle(template:HTMLTemplateElement, style:HTMLStyleElement
         return;
     }
 
-    const scope = `data-v-${randomUuid().split(/-/)[0]}`;
+    const scope = `data-v-${hexEncode(randomBin(4))}`;
 
     for(const {attributes} of template?.content.querySelectorAll("[class]") ?? []){
         attributes.setNamedItem(document.createAttribute(scope));

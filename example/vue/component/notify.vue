@@ -12,7 +12,7 @@
     import {computed} from "../../deps.js";
 
     export default {
-        props: ["modelValue", "color", "icon"],
+        props: ["modelValue", "color"],
         emits: ["update:modelValue"],
         setup(props, context){
             const model = computed({
