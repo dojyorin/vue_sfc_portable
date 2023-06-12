@@ -1,8 +1,6 @@
 <template>
     <v-app-bar density="compact" color="primary">
-        <template #prepend>
-            <v-app-bar-nav-icon @click="nav = !nav"></v-app-bar-nav-icon>
-        </template>
+        <v-app-bar-nav-icon @click="nav = !nav"></v-app-bar-nav-icon>
 
         <v-app-bar-title>Application</v-app-bar-title>
     </v-app-bar>
