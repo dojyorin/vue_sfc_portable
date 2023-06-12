@@ -13,9 +13,9 @@
 </template>
 
 <script>
-    import {computed, useRouter} from "../../deps.js";
+    import {defineComponent, computed, useRouter} from "../../deps.js";
 
-    export default {
+    export default defineComponent({
         props: ["modelValue"],
         emits: ["update:modelValue"],
         setup(props, context){
@@ -30,5 +30,5 @@
 
             return {model, routes};
         }
-    };
+    });
 </script>

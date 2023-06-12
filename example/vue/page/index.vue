@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {defineComponent, ref} from "../../deps.js";
+    import {defineComponent, ref, useStore} from "../../deps.js";
 
     export default defineComponent({
         setup(){

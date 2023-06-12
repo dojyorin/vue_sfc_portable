@@ -17,7 +17,9 @@
 </template>
 
 <script>
-    export default {
+    import {defineComponent, ref, useStore} from "../../deps.js";
+
+    export default defineComponent({
         setup(){
             const store = useStore();
 
@@ -29,5 +31,5 @@
 
             return {countx, resetx};
         }
-    };
+    });
 </script>

@@ -7,9 +7,9 @@
 </template>
 
 <script>
-    import {computed} from "../../deps.js";
+    import {defineComponent, computed} from "../../deps.js";
 
-    export default {
+    export default defineComponent({
         props: ["nav"],
         emits: ["update:nav"],
         setup(props, context){
@@ -20,5 +20,5 @@
 
             return {nav};
         }
-    };
+    });
 </script>
