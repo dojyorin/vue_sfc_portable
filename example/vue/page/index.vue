@@ -16,7 +16,7 @@
         </v-row>
     </v-container>
 
-    <x-notify color="info" v-model="notify">Update!</x-notify>
+    <x-notify color="success" v-model="notify">Update!</x-notify>
 </template>
 
 <script>
