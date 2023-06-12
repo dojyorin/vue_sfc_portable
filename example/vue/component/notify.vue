@@ -9,9 +9,9 @@
 </template>
 
 <script>
-    import {computed} from "../../deps.js";
+    import {defineComponent, computed} from "../../deps.js";
 
-    export default {
+    export default defineComponent({
         props: ["modelValue", "color"],
         emits: ["update:modelValue"],
         setup(props, context){
@@ -22,5 +22,5 @@
 
             return {model};
         }
-    };
+    });
 </script>

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent, useStore, ref, computed, onMounted, fetchComponent} from "../deps.js";
+    import {defineComponent, defineAsyncComponent, ref, computed, onMounted, useStore, fetchComponent} from "../deps.js";
 
     export default defineComponent({
         components: {
@@ -28,18 +28,18 @@
         setup(){
             const store = useStore();
 
+            const nav = ref(false);
+
             const loading = computed({
                 get: () => store.getters.loading,
                 set: v => store.commit("loading", v)
             });
 
-            const nav = ref(false);
-
             onMounted(()=>{
                 store.commit("loading", false);
             });
 
-            return {loading, nav};
+            return {nav, loading};
         }
     });
 </script>

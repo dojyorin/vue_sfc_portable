@@ -1,32 +1,47 @@
 <template>
     <v-container fluid>
-        <v-row>
-            <v-col cols sm="12">
+        <v-row justify="center">
+            <v-col cols>
                 <v-card>
-                    <v-card-title>Title</v-card-title>
-                    <v-card-subtitle>Subtitle</v-card-subtitle>
+                    <v-card-item>
+                        <v-card-title class="text-center">{{count}} : {{countx}}</v-card-title>
+                    </v-card-item>
 
-                    <v-card-text>Example</v-card-text>
-
-                    <v-card-actions>
-                        <v-btn variant="flat" color="red" class="reflect" @click="notify = true">Notify</v-btn>
+                    <v-card-actions class="justify-center">
+                        <v-btn @click="increment">Increment</v-btn>
+                        <v-btn @click="incrementx">IncrementX</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
         </v-row>
     </v-container>
 
-    <x-notify color="red" v-model="notify">test</x-notify>
+    <x-notify color="success" v-model="notify">Update!</x-notify>
 </template>
 
 <script>
-    import {defineComponent, ref} from "../../deps.js";
+    import {defineComponent, ref, computed, useStore} from "../../deps.js";
 
     export default defineComponent({
         setup(){
+            const store = useStore();
+
+            const count = ref(0);
             const notify = ref(false);
 
-            return {notify};
+            const countx = computed(() => store.getters.count);
+
+            function increment(){
+                count.value++;
+                notify.value = true;
+            }
+
+            function incrementx(){
+                store.commit("increment");
+                notify.value = true;
+            }
+
+            return {count, notify, countx, increment, incrementx};
         }
     });
 </script>
