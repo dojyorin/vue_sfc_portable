@@ -9,7 +9,7 @@ Provide minimal features for compiling SFC in browser.
 Compatible features with [@vue/compiler-sfc](https://www.npmjs.com/package/@vue/compiler-sfc):
 
 - Pure HTML/JS/CSS
-- Scoped CSS
+- Scoped CSS *1
 
 Incompatible features:
 
@@ -19,7 +19,9 @@ Incompatible features:
 - CSS Module
 - `src` attribute
 - `setup` attribute
-- multiple `<style>` tag.
+- multiple `<style>` tag
+
+*1 Partial support, only class selectors.
 
 # API
 See [`fetch.ts`](./src/fetch.ts) for details.
