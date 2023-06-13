@@ -3,7 +3,7 @@
 /// <reference lib="dom"/>
 /// <reference lib="dom.iterable"/>
 
-import {type Component, randomBin, hexEncode} from "../deps.ts";
+import {type Component, randomBin, base64Encode, utfEncode, hexEncode} from "../deps.ts";
 
 function findPart<T extends typeof HTMLElement>(elements:Element[], type:T){
     return <InstanceType<T> | undefined>elements.find(e => e instanceof type);
@@ -68,6 +68,6 @@ export async function compileComponent(sfc:string, path?:string):Promise<Compone
 
     return {
         template: template.innerHTML,
-        ...(await import(`data:text/javascript;base64,${btoa(script?.innerHTML ?? "")}`)).default
+        ...(await import(`data:text/javascript;base64,${base64Encode(utfEncode(script?.innerHTML ?? ""))}`)).default
     };
 }
