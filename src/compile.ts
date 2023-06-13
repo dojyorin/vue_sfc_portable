@@ -9,6 +9,17 @@ function findPart<T extends typeof HTMLElement>(elements:Element[], type:T){
     return <InstanceType<T> | undefined>elements.find(e => e instanceof type);
 }
 
+/**
+* Compile from string of SFC structure.
+* @example
+* ```ts
+* export default defineComponent({
+*     components: {
+*         "my-input": await compileComponent("<template>...</template>")
+*     }
+* });
+* ```
+*/
 export async function compileComponent(sfc:string, path?:string):Promise<Component>{
     const {head: {children: [...elements]}} = new DOMParser().parseFromString(sfc, "text/html");
 
