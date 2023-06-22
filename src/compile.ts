@@ -5,8 +5,16 @@
 
 import {type Component, randomBin, base64Encode, utfEncode, hexEncode} from "../deps.ts";
 
-function findPart<T extends typeof HTMLElement>(elements:Element[], type:T){
+function findComponent<T extends typeof HTMLElement>(elements:Element[], type:T){
     return <InstanceType<T> | undefined>elements.find(e => e instanceof type);
+}
+
+function parseHtml(html:string){
+    return new DOMParser().parseFromString(html, "text/html");
+}
+
+async function evaluateScript(js:string){
+    return <Record<string, unknown>>await import(`data:text/javascript;base64,${base64Encode(utfEncode(js))}`);
 }
 
 /**
@@ -21,11 +29,11 @@ function findPart<T extends typeof HTMLElement>(elements:Element[], type:T){
 * ```
 */
 export async function compileComponent(sfc:string, path?:string):Promise<Component>{
-    const {head: {children: [...elements]}} = new DOMParser().parseFromString(sfc, "text/html");
+    const {head: {children: [...elements]}} = parseHtml(sfc);
 
-    const template = findPart(elements, HTMLTemplateElement);
-    const script = findPart(elements, HTMLScriptElement);
-    const style = findPart(elements, HTMLStyleElement);
+    const template = findComponent(elements, HTMLTemplateElement);
+    const script = findComponent(elements, HTMLScriptElement);
+    const style = findComponent(elements, HTMLStyleElement);
 
     if(!template){
         throw new Error();
@@ -68,6 +76,6 @@ export async function compileComponent(sfc:string, path?:string):Promise<Compone
 
     return {
         template: template.innerHTML,
-        ...(await import(`data:text/javascript;base64,${base64Encode(utfEncode(script?.innerHTML ?? ""))}`)).default
+        ...(await evaluateScript(script?.innerHTML ?? "")).default
     };
 }
