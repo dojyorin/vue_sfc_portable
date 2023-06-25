@@ -8,15 +8,13 @@
                     </v-card-item>
 
                     <v-card-actions class="justify-center">
-                        <v-btn @click="increment">Increment</v-btn>
-                        <v-btn @click="incrementx">IncrementX</v-btn>
+                        <v-btn color="green" variant="flat" @click="increment">Increment</v-btn>
+                        <v-btn color="purple" variant="flat" @click="incrementx">IncrementX</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
         </v-row>
     </v-container>
-
-    <x-notify color="success" v-model="notify">Update!</x-notify>
 </template>
 
 <script>
@@ -27,61 +25,28 @@
             const store = useStore();
 
             const count = ref(0);
-            const notify = ref(false);
 
-            const countx = computed(() => store.getters.count);
+            const countx = computed(() => store.getters["user/count"]);
 
             function increment(){
                 count.value++;
-                notify.value = true;
+
+                store.commit("overlay/notifyPush", {
+                    color: "green",
+                    message: "Increment!"
+                });
             }
 
             function incrementx(){
-                store.commit("increment");
-                notify.value = true;
+                store.commit("user/increment");
+
+                store.commit("overlay/notifyPush", {
+                    color: "purple",
+                    message: "IncrementX!"
+                });
             }
 
-            return {count, notify, countx, increment, incrementx};
+            return {count, countx, increment, incrementx};
         }
     });
 </script>
-
-<style scoped>
-    @keyframes reflect{
-        0%{
-            transform: scale(0) rotate(45deg);
-            opacity: 0;
-        }
-        80%{
-            transform: scale(0) rotate(45deg);
-            opacity: 0.5;
-        }
-        81%{
-            transform: scale(4) rotate(45deg);
-            opacity: 1;
-        }
-        100%{
-            transform: scale(50) rotate(45deg);
-            opacity: 0;
-        }
-    }
-
-    .reflect{
-        position: relative;
-        overflow: hidden;
-        background-color: #666666;
-    }
-    .reflect::after{
-        content: "";
-        display: block;
-        position: absolute;
-        top: -180px;
-        left: 0;
-        height: 100%;
-        width: 30px;
-        opacity: 0;
-        background-color: #FFFFFF;
-        transform: rotate(45deg);
-        animation: reflect 5s ease-in-out infinite;
-    }
-</style>

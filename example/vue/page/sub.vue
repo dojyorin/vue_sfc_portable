@@ -8,7 +8,9 @@
                     </v-card-item>
 
                     <v-card-actions class="justify-center">
-                        <v-btn @click="resetx">ResetX</v-btn>
+                        <x-reflect>
+                            <v-btn color="orange-darken-1" variant="flat" @click="resetx">ResetX</v-btn>
+                        </x-reflect>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -17,16 +19,16 @@
 </template>
 
 <script>
-    import {defineComponent, ref, computed, useStore} from "../../deps.js";
+    import {defineComponent, computed, useStore} from "../../deps.js";
 
     export default defineComponent({
         setup(){
             const store = useStore();
 
-            const countx = computed(() => store.getters.count);
+            const countx = computed(() => store.getters["user/count"]);
 
             function resetx(){
-                store.commit("reset");
+                store.commit("user/reset");
             }
 
             return {countx, resetx};

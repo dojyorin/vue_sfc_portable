@@ -9,5 +9,5 @@ export const component = ((components)=>{
         }
     };
 })({
-    "x-notify": await fetchComponent(import.meta.resolve("./component/notify.vue"))()
+    "x-reflect": await fetchComponent(import.meta.resolve("./component/reflect.vue"))()
 });
