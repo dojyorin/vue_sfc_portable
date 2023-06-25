@@ -3,11 +3,10 @@
 /// <reference lib="dom"/>
 /// <reference lib="dom.iterable"/>
 
-import {type Component, randomBin, base64Encode, utfEncode, hexEncode} from "../deps.ts";
-
-function findPart<T extends typeof HTMLElement>(elements:Element[], type:T){
-    return <InstanceType<T> | undefined>elements.find(e => e instanceof type);
-}
+import {type Component, randomBin, hexEncode} from "../deps.ts";
+import {evaluateScript} from "./evaluate.ts";
+import {resolvePath} from "./path.ts";
+import {parseHtml, findComponent} from "./dom.ts";
 
 /**
 * Compile from string of SFC structure.
@@ -21,11 +20,11 @@ function findPart<T extends typeof HTMLElement>(elements:Element[], type:T){
 * ```
 */
 export async function compileComponent(sfc:string, path?:string):Promise<Component>{
-    const {head: {children: [...elements]}} = new DOMParser().parseFromString(sfc, "text/html");
+    const {head: {children: [...elements]}} = parseHtml(sfc);
 
-    const template = findPart(elements, HTMLTemplateElement);
-    const script = findPart(elements, HTMLScriptElement);
-    const style = findPart(elements, HTMLStyleElement);
+    const template = findComponent(elements, HTMLTemplateElement);
+    const script = findComponent(elements, HTMLScriptElement);
+    const style = findComponent(elements, HTMLStyleElement);
 
     if(!template){
         throw new Error();
@@ -34,9 +33,9 @@ export async function compileComponent(sfc:string, path?:string):Promise<Compone
     if(script?.innerHTML){
         script.innerHTML = script.innerHTML.replace(/"\.{0,2}\/(\\"|[^"\r\n\t ])+"|'\.{0,2}\/(\\'|[^'\r\n\t ])+'|`\.{0,2}\/(\\`|[^`\r\n\t ])+`/g, (sub)=>{
             const [quote] = sub;
-            const name = sub.replace(/^["'`]/, "").replace(/["'`]$/, "");
+            const link = resolvePath(location.href, path ?? "", sub.slice(1, -1)).replace(new RegExp(quote, "g"), `\\${quote}`);
 
-            return `${quote}${decodeURIComponent(new URL(name, new URL(path ?? "", location.href)).href).replace(new RegExp(quote, "g"), `\\${quote}`)}${quote}`;
+            return `${quote}${link}${quote}`;
         });
     }
 
@@ -68,6 +67,6 @@ export async function compileComponent(sfc:string, path?:string):Promise<Compone
 
     return {
         template: template.innerHTML,
-        ...(await import(`data:text/javascript;base64,${base64Encode(utfEncode(script?.innerHTML ?? ""))}`)).default
+        ...(await evaluateScript<Component>(script?.innerHTML ?? "")).default
     };
 }
