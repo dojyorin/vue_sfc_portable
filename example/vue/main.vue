@@ -4,6 +4,16 @@
             <v-progress-circular indeterminate size="60" width="4" color="primary"></v-progress-circular>
         </v-overlay>
 
+        <template v-for="({color, message}, i) in notifies">
+            <v-snackbar model-value position="fixed" location="top" timeout="-1" :color="color">
+                <span>{{message}}</span>
+
+                <template #actions>
+                    <v-btn ripple density="comfortable" icon="mdi-close" @click="notifyPull(i)"></v-btn>
+                </template>
+            </v-snackbar>
+        </template>
+
         <x-navigation v-model="nav"></x-navigation>
 
         <x-header v-model:nav="nav"></x-header>
@@ -31,15 +41,21 @@
             const nav = ref(false);
 
             const loading = computed({
-                get: () => store.getters.loading,
-                set: v => store.commit("loading", v)
+                get: () => store.getters["overlay/loading"],
+                set: v => store.commit("overlay/loading", v)
             });
+
+            const notifies = computed(() => store.getters["overlay/notifies"]);
+
+            function notifyPull(i){
+                store.commit("overlay/notifyPull", i);
+            }
 
             onMounted(()=>{
-                store.commit("loading", false);
+                loading.value = false;
             });
 
-            return {nav, loading};
+            return {nav, loading, notifies, notifyPull};
         }
     });
 </script>

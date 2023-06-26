@@ -1,31 +1,66 @@
 import {createStore} from "../deps.js";
 
 export const store = createStore({
-    state(){
-        return {
-            count: 0,
-            loading: true
-        };
-    },
+    modules: {
+        overlay: {
+            namespaced: true,
 
-    getters: {
-        count(s){
-            return s.count;
-        },
-        loading(s){
-            return s.loading;
-        }
-    },
+            state(){
+                return {
+                    loading: true,
+                    notifies: []
+                };
+            },
 
-    mutations: {
-        increment(s){
-            s.count++;
+            getters: {
+                loading(s){
+                    return s.loading;
+                },
+
+                notifies(s){
+                    return s.notifies;
+                }
+            },
+
+            mutations: {
+                loading(s, v){
+                    s.loading = v;
+                },
+
+                notifyPush(s, v){
+                    s.notifies.push(v);
+                },
+
+                notifyPull(s, v){
+                    s.notifies.splice(v);
+                }
+            }
         },
-        reset(s){
-            s.count = 0;
-        },
-        loading(s, v){
-            s.loading = v;
+
+        user: {
+            namespaced: true,
+
+            state(){
+                return {
+                    count: 0
+                };
+            },
+
+            getters: {
+                count(s){
+                    return s.count;
+                }
+            },
+
+            mutations: {
+                increment(s){
+                    s.count++;
+                },
+
+                reset(s){
+                    s.count = 0;
+                }
+            }
         }
     }
 });
