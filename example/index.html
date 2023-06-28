@@ -27,6 +27,7 @@
     import {store} from "./vue/store.js";
     import {vuetify} from "./vue/vuetify.js";
     import {component} from "./vue/component.js";
+    import {provide} from "./vue/provide.js";
 
     const vue = createApp(await fetchComponent("./vue/main.vue")());
 
@@ -34,6 +35,7 @@
     vue.use(store);
     vue.use(vuetify);
     vue.use(component);
+    vue.use(provide);
 
     vue.mount("#vue");
 </script>

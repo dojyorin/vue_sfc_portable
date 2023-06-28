@@ -8,9 +8,10 @@
                     </v-card-item>
 
                     <v-card-actions class="justify-center">
-                        <x-reflect>
-                            <v-btn color="orange-darken-1" variant="flat" @click="resetx">ResetX</v-btn>
-                        </x-reflect>
+                        <xg-reflect>
+                            <v-btn color="orange-darken-1" variant="flat" @click="resetx()">ResetX</v-btn>
+                            <v-btn color="teal-darken-1" variant="flat" @click="resetdelayx()">ResetDelayX</v-btn>
+                        </xg-reflect>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -19,19 +20,38 @@
 </template>
 
 <script>
-    import {defineComponent, computed, useStore} from "../../deps.js";
+    import {defineComponent, inject, computed, useStore} from "../../deps.js";
 
     export default defineComponent({
         setup(){
             const store = useStore();
 
-            const countx = computed(() => store.getters["user/count"]);
+            const loading = inject("xg-loading");
+            const notifies = inject("xg-notifies");
+
+            const countx = computed(() => store.getters.count);
 
             function resetx(){
-                store.commit("user/reset");
+                store.commit("reset");
+
+                notifies.push({
+                    color: "orange-darken-1",
+                    message: "ResetX!"
+                });
             }
 
-            return {countx, resetx};
+            async function resetdelayx(){
+                loading.value = true;
+                await store.dispatch("delayReset");
+                loading.value = false;
+
+                notifies.push({
+                    color: "teal-darken-1",
+                    message: "ResetDelayX!"
+                });
+            }
+
+            return {countx, resetx, resetdelayx};
         }
     });
 </script>

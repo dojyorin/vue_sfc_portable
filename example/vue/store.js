@@ -1,66 +1,33 @@
 import {createStore} from "../deps.js";
 
 export const store = createStore({
-    modules: {
-        overlay: {
-            namespaced: true,
+    state(){
+        return {
+            count: 0
+        };
+    },
 
-            state(){
-                return {
-                    loading: true,
-                    notifies: []
-                };
-            },
+    getters: {
+        count(s){
+            return s.count;
+        }
+    },
 
-            getters: {
-                loading(s){
-                    return s.loading;
-                },
-
-                notifies(s){
-                    return s.notifies;
-                }
-            },
-
-            mutations: {
-                loading(s, v){
-                    s.loading = v;
-                },
-
-                notifyPush(s, v){
-                    s.notifies.push(v);
-                },
-
-                notifyPull(s, v){
-                    s.notifies.splice(v);
-                }
-            }
+    mutations: {
+        increment(s){
+            s.count++;
         },
 
-        user: {
-            namespaced: true,
+        reset(s){
+            s.count = 0;
+        }
+    },
 
-            state(){
-                return {
-                    count: 0
-                };
-            },
+    actions: {
+        async delayReset(context){
+            await new Promise(done => setTimeout(done, 1000));
 
-            getters: {
-                count(s){
-                    return s.count;
-                }
-            },
-
-            mutations: {
-                increment(s){
-                    s.count++;
-                },
-
-                reset(s){
-                    s.count = 0;
-                }
-            }
+            context.commit("reset");
         }
     }
 });

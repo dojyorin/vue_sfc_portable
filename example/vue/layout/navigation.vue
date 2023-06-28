@@ -1,7 +1,7 @@
 <template>
-    <v-navigation-drawer floating temporary v-model="model">
+    <v-navigation-drawer floating temporary v-model="nav">
         <v-toolbar density="compact" color="primary">
-            <v-btn icon="mdi-close" @click="model = false"></v-btn>
+            <v-btn icon="mdi-close" @click="nav = false"></v-btn>
         </v-toolbar>
 
         <v-list>
@@ -15,22 +15,17 @@
 </template>
 
 <script>
-    import {defineComponent, computed, useRouter} from "../../deps.js";
+    import {defineComponent, inject, useRouter} from "../../deps.js";
 
     export default defineComponent({
-        props: ["modelValue"],
-        emits: ["update:modelValue"],
-        setup(props, context){
+        setup(){
             const router = useRouter();
 
-            const model = computed({
-                get: () => props.modelValue,
-                set: v => context.emit("update:modelValue", v)
-            });
+            const nav = inject("xg-navigation");
 
             const routes = router.getRoutes().toSpliced(-1, 1);
 
-            return {model, routes};
+            return {nav, routes};
         }
     });
 </script>

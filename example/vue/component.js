@@ -1,13 +1,13 @@
 import {fetchComponent} from "../deps.js";
 
-export const component = ((components)=>{
+export const component = ((arg)=>{
     return {
-        install(vue){
-            for(const [k, v] of Object.entries(components)){
-                vue.component(k, v);
+        install(context){
+            for(const [k, v] of Object.entries(arg)){
+                context.component(k, v);
             }
         }
     };
 })({
-    "x-reflect": await fetchComponent(import.meta.resolve("./component/reflect.vue"))()
+    "xg-reflect": await fetchComponent(import.meta.resolve("./component/reflect.vue"))()
 });

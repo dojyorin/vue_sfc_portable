@@ -14,7 +14,7 @@ import {parseHtml, findComponent} from "./dom.ts";
 * ```ts
 * export default defineComponent({
 *     components: {
-*         "my-input": await compileComponent("<template>...</template>")
+*         "my-input": await compileComponent("<template>...</template>". "./component.vue")
 *     }
 * });
 * ```
