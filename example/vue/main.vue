@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-overlay persistent no-click-animation class="justify-center align-center" v-model="loading">
+        <v-overlay persistent no-click-animation z-index="3000" class="justify-center align-center" v-model="loading">
             <v-progress-circular indeterminate size="60" width="4" color="primary"></v-progress-circular>
         </v-overlay>
 
