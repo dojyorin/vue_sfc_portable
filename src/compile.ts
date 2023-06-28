@@ -32,7 +32,7 @@ export async function compileComponent(sfc:string, path?:string):Promise<Compone
     if(script?.innerHTML){
         script.innerHTML = script.innerHTML.replace(/"\.{0,2}\/(\\"|[^"\r\n\t ])+"|'\.{0,2}\/(\\'|[^'\r\n\t ])+'|`\.{0,2}\/(\\`|[^`\r\n\t ])+`/g, (sub)=>{
             const [quote] = sub;
-            const link = decodeURIComponent([location.href, path ?? "", sub.slice(1, -1)].reduce((a, b) => new URL(b, a).href, ""));
+            const link = decodeURIComponent([path ?? "", sub.slice(1, -1)].reduce((a, b) => new URL(b, a).href, location.href));
 
             return `${quote}${link.replace(new RegExp(quote, "g"), `\\${quote}`)}${quote}`;
         });
