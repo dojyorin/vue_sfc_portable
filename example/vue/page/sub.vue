@@ -26,6 +26,7 @@
         setup(){
             const store = useStore();
 
+            const loading = inject("loading");
             const notifies = inject("notifies");
 
             const countx = computed(() => store.getters.count);
@@ -40,7 +41,9 @@
             }
 
             async function resetdelayx(){
+                loading.value = true;
                 await store.dispatch("delayReset");
+                loading.value = false;
 
                 notifies.push({
                     color: "teal-darken-1",
