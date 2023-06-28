@@ -19,7 +19,7 @@ Incompatible features:
 - `<style module>`
 - `<style>` multiple tag
 
-*1 Partial support, only class selectors.
+*1 Support only class selectors.
 
 # API
 See [`fetch.ts`](./src/fetch.ts) for details.
