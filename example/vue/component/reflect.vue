@@ -30,6 +30,7 @@
     }
 
     .x-reflect::after {
+        pointer-events: none;
         content: "";
         position: absolute;
         display: block;

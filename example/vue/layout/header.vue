@@ -7,16 +7,11 @@
 </template>
 
 <script>
-    import {defineComponent, computed} from "../../deps.js";
+    import {defineComponent, inject} from "../../deps.js";
 
     export default defineComponent({
-        props: ["nav"],
-        emits: ["update:nav"],
-        setup(props, context){
-            const nav = computed({
-                get: () => props.nav,
-                set: v => context.emit("update:nav", v)
-            });
+        setup(){
+            const nav = inject("navigation");
 
             return {nav};
         }

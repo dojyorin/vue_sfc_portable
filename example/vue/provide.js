@@ -9,6 +9,7 @@ export const provide = ((arg)=>{
         }
     };
 })({
+    "navigation": ref(false),
     "loading": ref(false),
     "notifies": reactive([])
 });
