@@ -8,10 +8,10 @@
                     </v-card-item>
 
                     <v-card-actions class="justify-center">
-                        <x-reflect>
+                        <xg-reflect>
                             <v-btn color="orange-darken-1" variant="flat" @click="resetx()">ResetX</v-btn>
                             <v-btn color="teal-darken-1" variant="flat" @click="resetdelayx()">ResetDelayX</v-btn>
-                        </x-reflect>
+                        </xg-reflect>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -26,8 +26,8 @@
         setup(){
             const store = useStore();
 
-            const loading = inject("loading");
-            const notifies = inject("notifies");
+            const loading = inject("xg-loading");
+            const notifies = inject("xg-notifies");
 
             const countx = computed(() => store.getters.count);
 

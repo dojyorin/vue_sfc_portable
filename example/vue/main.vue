@@ -26,7 +26,7 @@
             "x-navigation": defineAsyncComponent(fetchComponent("./layout/navigation.vue"))
         },
         setup(){
-            const loading = inject("loading");
+            const loading = inject("xg-loading");
 
             onMounted(()=>{
                 loading.value = false;

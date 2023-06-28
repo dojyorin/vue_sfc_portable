@@ -9,7 +9,7 @@
 
     export default defineComponent({
         setup(){
-            const loading = inject("loading");
+            const loading = inject("xg-loading");
 
             return {loading};
         }

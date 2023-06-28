@@ -9,5 +9,5 @@ export const component = ((arg)=>{
         }
     };
 })({
-    "x-reflect": await fetchComponent(import.meta.resolve("./component/reflect.vue"))()
+    "xg-reflect": await fetchComponent(import.meta.resolve("./component/reflect.vue"))()
 });
