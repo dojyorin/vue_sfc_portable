@@ -1,4 +1,4 @@
-import {fetchComponent, ref, reactive} from "../deps.js";
+import {ref, reactive} from "../deps.js";
 
 export const provide = ((arg)=>{
     return {

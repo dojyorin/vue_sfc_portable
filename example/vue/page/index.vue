@@ -8,8 +8,8 @@
                     </v-card-item>
 
                     <v-card-actions class="justify-center">
-                        <v-btn color="green" variant="flat" @click="increment">Increment</v-btn>
-                        <v-btn color="purple" variant="flat" @click="incrementx">IncrementX</v-btn>
+                        <v-btn color="green" variant="flat" @click="increment()">Increment</v-btn>
+                        <v-btn color="purple" variant="flat" @click="incrementx()">IncrementX</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-    import {defineComponent, ref, computed, useStore} from "../../deps.js";
+    import {defineComponent, ref, inject, computed, useStore} from "../../deps.js";
 
     export default defineComponent({
         setup(){
@@ -26,21 +26,23 @@
 
             const count = ref(0);
 
-            const countx = computed(() => store.getters["user/count"]);
+            const notifies = inject("notifies");
+
+            const countx = computed(() => store.getters.count);
 
             function increment(){
                 count.value++;
 
-                store.commit("overlay/notifyPush", {
+                notifies.push({
                     color: "green",
                     message: "Increment!"
                 });
             }
 
             function incrementx(){
-                store.commit("user/increment");
+                store.commit("increment");
 
-                store.commit("overlay/notifyPush", {
+                notifies.push({
                     color: "purple",
                     message: "IncrementX!"
                 });

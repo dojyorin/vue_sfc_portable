@@ -9,7 +9,7 @@
                 <span>{{message}}</span>
 
                 <template #actions>
-                    <v-btn ripple density="comfortable" icon="mdi-close" @click="notifyPull(i)"></v-btn>
+                    <v-btn ripple density="comfortable" icon="mdi-close" @click="notifies.splice(i, 1)"></v-btn>
                 </template>
             </v-snackbar>
         </template>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    import {defineComponent, defineAsyncComponent, ref, computed, onMounted, useStore, fetchComponent} from "../deps.js";
+    import {defineComponent, defineAsyncComponent, ref, inject, onMounted, fetchComponent} from "../deps.js";
 
     export default defineComponent({
         components: {
@@ -36,26 +36,16 @@
             "x-navigation": defineAsyncComponent(fetchComponent("./layout/navigation.vue"))
         },
         setup(){
-            const store = useStore();
-
             const nav = ref(false);
 
-            const loading = computed({
-                get: () => store.getters["overlay/loading"],
-                set: v => store.commit("overlay/loading", v)
-            });
-
-            const notifies = computed(() => store.getters["overlay/notifies"]);
-
-            function notifyPull(i){
-                store.commit("overlay/notifyPull", i);
-            }
+            const loading = inject("loading");
+            const notifies = inject("notifies");
 
             onMounted(()=>{
                 loading.value = false;
             });
 
-            return {nav, loading, notifies, notifyPull};
+            return {nav, loading, notifies};
         }
     });
 </script>
