@@ -5,7 +5,7 @@
 
 import {minifyScript, base64Encode, utfEncode} from "../deps.ts";
 
-export async function evaluateScript<T extends unknown>(js:string){
+export async function esmEval<T extends unknown>(js:string){
     const {code} = await minifyScript(js);
     const b64 = base64Encode(utfEncode(code ?? ""));
 
