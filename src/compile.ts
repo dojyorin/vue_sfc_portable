@@ -5,7 +5,7 @@
 
 import {type Component, randomBin, hexEncode} from "../deps.ts";
 import {parseHtml, findComponent} from "./dom.ts";
-import {evaluateScript} from "./evaluate.ts";
+import {esmEval} from "./evaluate.ts";
 
 /**
 * Compile from string of SFC structure.
@@ -66,6 +66,6 @@ export async function compileComponent(sfc:string, path?:string):Promise<Compone
 
     return {
         template: template.innerHTML,
-        ...(await evaluateScript<Component>(script?.innerHTML ?? "")).default
+        ...(await esmEval<Component>(script?.innerHTML ?? "")).default
     };
 }
