@@ -27,4 +27,4 @@ export {fetchComponent} from "https://esm.sh/gh/dojyorin/vue_sfc_portable@versio
 ```
 
 # API
-See [`fetch.ts`](./src/fetch.ts) for details.
+See [`mod.ts`](./mod.ts) for details.
