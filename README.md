@@ -21,5 +21,10 @@ Incompatible features:
 
 *1 Support only class selectors.
 
+# Usage
+```ts
+export {fetchComponent} from "https://esm.sh/gh/dojyorin/vue_sfc_portable@version/mod.ts?bundle&target=esnext";
+```
+
 # API
 See [`fetch.ts`](./src/fetch.ts) for details.
