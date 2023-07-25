@@ -7,6 +7,11 @@ import {type Component, type FetchInit, fetchExtend} from "../deps.ts";
 import {compileComponent} from "./compile.ts";
 
 /**
+* Wrap component in function.
+*/
+export type ComponentWrapFunction = () => Promise<Component>;
+
+/**
 * Download and compile SFC on network using Fetch API.
 * @example
 * ```ts
@@ -21,6 +26,6 @@ import {compileComponent} from "./compile.ts";
 * });
 * ```
 */
-export function fetchComponent(path:string, option?:FetchInit):() => Promise<Component>{
+export function fetchComponent(path:string, option?:FetchInit):ComponentWrapFunction{
     return async () => await compileComponent(await fetchExtend(path, "text", option), path);
 }
