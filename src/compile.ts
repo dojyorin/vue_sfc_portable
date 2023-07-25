@@ -3,9 +3,22 @@
 /// <reference lib="dom"/>
 /// <reference lib="dom.iterable"/>
 
-import {type Component, randomBin, hexEncode} from "../deps.ts";
-import {parseHtml, findComponent} from "./dom.ts";
-import {esmEval} from "./evaluate.ts";
+import {type Component, type DefExp, minifyScript, evaluateESM, randomBin, hexEncode} from "../deps.ts";
+
+function parseHtml(html:string){
+    return new DOMParser().parseFromString(html, "text/html");
+}
+
+function findComponent<T extends typeof HTMLElement>(elements:Element[], type:T){
+    return <InstanceType<T> | undefined>elements.find(e => e instanceof type);
+}
+
+async function importComponent(script:string){
+    const {code} = await minifyScript(script);
+    const {default: component} = await evaluateESM<DefExp<Component>>(code ?? "");
+
+    return component;
+}
 
 /**
 * Compile from string of SFC structure.
@@ -66,6 +79,6 @@ export async function compileComponent(sfc:string, path?:string):Promise<Compone
 
     return {
         template: template.innerHTML,
-        ...(await esmEval<Component>(script?.innerHTML ?? "")).default
+        ...await importComponent(script?.innerHTML ?? "")
     };
 }
