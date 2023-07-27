@@ -3,7 +3,7 @@
 /// <reference lib="dom"/>
 /// <reference lib="dom.iterable"/>
 
-import {type Component, type DefExp, minifyScript, evaluateESM, randomBin, hexEncode} from "../deps.ts";
+import {type Component, type DefExp, minifyScript, evaluateESM, pad0} from "../deps.ts";
 
 function parseHtml(html:string){
     return new DOMParser().parseFromString(html, "text/html");
@@ -13,25 +13,27 @@ function findComponent<T extends typeof HTMLElement>(elements:Element[], type:T)
     return <InstanceType<T> | undefined>elements.find(e => e instanceof type);
 }
 
-async function importComponent(script:string){
-    const {code} = await minifyScript(script);
-    const {default: component} = await evaluateESM<DefExp<Component>>(code ?? "");
-
-    return component;
+function roughId(){
+    return pad0(Math.floor(Math.random() * 16777216), 6, 16);
 }
 
 /**
-* Compile from string of SFC structure.
+* Contents of SFC parts.
+*/
+export interface SFCPart{
+    html: string;
+    js?: string;
+    css?: string;
+}
+
+/**
+* SFC parts `<template>` `<script>` `<style>` to decompose and string processing such as path correction and CSS scoping.
 * @example
 * ```ts
-* export default defineComponent({
-*     components: {
-*         "my-input": await compileComponent("<template>...</template>". "./component.vue")
-*     }
-* });
+* const part = parseComponent("<template>...</template>", "./component.vue");
 * ```
 */
-export async function compileComponent(sfc:string, path?:string):Promise<Component>{
+export function parseComponent(sfc:string, path?:string):SFCPart{
     const {head: {children: [...elements]}} = parseHtml(sfc);
 
     const template = findComponent(elements, HTMLTemplateElement);
@@ -52,7 +54,7 @@ export async function compileComponent(sfc:string, path?:string):Promise<Compone
     }
 
     if(style?.innerHTML && style.hasAttribute("scoped")){
-        const scope = `data-v-${hexEncode(randomBin(4))}`;
+        const scope = `data-v-${roughId()}`;
 
         for(const {attributes} of template.content.querySelectorAll("[class]")){
             attributes.setNamedItem(document.createAttribute(scope));
@@ -78,7 +80,43 @@ export async function compileComponent(sfc:string, path?:string):Promise<Compone
     }
 
     return {
-        template: template.innerHTML,
-        ...await importComponent(script?.innerHTML ?? "")
+        html: template.innerHTML,
+        js: script?.innerHTML,
+        css: style?.innerHTML
     };
+}
+
+/**
+* Generate component object can be used in Vue from SFC parts.
+* @example
+* ```ts
+* const part = parseComponent("<template>...</template>", "./component.vue");
+* const component = await generateComponent(part);
+* ```
+*/
+export async function generateComponent({html, js, css}:SFCPart):Promise<Component>{
+    if(css){
+        const style = document.createElement("style");
+        style.innerHTML = css;
+        document.head.appendChild(style);
+    }
+
+    const {code} = await minifyScript(js ?? "");
+    const {default: component} = await evaluateESM<DefExp<Component>>(code ?? "");
+
+    return {
+        template: html,
+        ...component
+    };
+}
+
+/**
+* Compile from SFC to component.
+* @example
+* ```ts
+* const component = await compileComponent("<template>...</template>", "./component.vue");
+* ```
+*/
+export async function compileComponent(sfc:string, path?:string):Promise<Component>{
+    return await generateComponent(parseComponent(sfc, path));
 }
