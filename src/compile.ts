@@ -3,18 +3,10 @@
 /// <reference lib="dom"/>
 /// <reference lib="dom.iterable"/>
 
-import {type Component, type DefExp, minifyScript, evaluateESM, pad0} from "../deps.ts";
-
-function parseHtml(html:string){
-    return new DOMParser().parseFromString(html, "text/html");
-}
+import {type Component, minify, base64DataURL, utfEncode, pad0} from "../deps.ts";
 
 function findComponent<T extends typeof HTMLElement>(elements:Element[], type:T){
     return <InstanceType<T> | undefined>elements.find(e => e instanceof type);
-}
-
-function roughId(){
-    return pad0(Math.floor(Math.random() * 16777216), 6, 16);
 }
 
 /**
@@ -34,7 +26,7 @@ export interface SFCPart{
 * ```
 */
 export function parseComponent(sfc:string, path?:string):SFCPart{
-    const {head: {children: [...elements]}} = parseHtml(sfc);
+    const {head: {children: [...elements]}} = new DOMParser().parseFromString(sfc, "text/html");
 
     const template = findComponent(elements, HTMLTemplateElement);
     const script = findComponent(elements, HTMLScriptElement);
@@ -54,7 +46,7 @@ export function parseComponent(sfc:string, path?:string):SFCPart{
     }
 
     if(style?.innerHTML && style.hasAttribute("scoped")){
-        const scope = `data-v-${roughId()}`;
+        const scope = `data-v-${pad0(Math.floor(Math.random() * 16777216), 6, 16)}`;
 
         for(const {attributes} of template.content.querySelectorAll("[class]")){
             attributes.setNamedItem(document.createAttribute(scope));
@@ -101,8 +93,8 @@ export async function generateComponent({html, js, css}:SFCPart):Promise<Compone
         document.head.appendChild(style);
     }
 
-    const {code} = await minifyScript(js ?? "");
-    const {default: component} = await evaluateESM<DefExp<Component>>(code ?? "");
+    const {code} = await minify(js ?? "");
+    const {default: component} = <{default: Component}>await import(base64DataURL(utfEncode(code ?? ""), "text/javascript"));
 
     return {
         template: html,
