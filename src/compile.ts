@@ -3,7 +3,7 @@
 /// <reference lib="dom"/>
 /// <reference lib="dom.iterable"/>
 
-import {type Component, minify, base64DataURL, utfEncode, pad0} from "../deps.ts";
+import {type Component, minify, b64DataURL, u8Encode, pad0} from "../deps.ts";
 
 function findComponent<T extends typeof HTMLElement>(elements:Element[], type:T){
     return <InstanceType<T> | undefined>elements.find(e => e instanceof type);
@@ -94,7 +94,7 @@ export async function generateComponent({html, js, css}:SFCPart):Promise<Compone
     }
 
     const {code} = await minify(js ?? "");
-    const {default: component} = <{default: Component}>await import(base64DataURL(utfEncode(code ?? ""), "text/javascript"));
+    const {default: component} = <{default: Component}>await import(b64DataURL(u8Encode(code ?? ""), "text/javascript"));
 
     return {
         template: html,
