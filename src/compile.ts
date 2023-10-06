@@ -1,8 +1,3 @@
-/// <reference no-default-lib="true"/>
-/// <reference lib="esnext"/>
-/// <reference lib="dom"/>
-/// <reference lib="dom.iterable"/>
-
 import {type Component, minify, b64DataURL, u8Encode, pad0} from "../deps.ts";
 
 function findComponent<T extends typeof HTMLElement>(elements:Element[], type:T){
@@ -19,7 +14,7 @@ export interface SFCPart{
 }
 
 /**
-* SFC parts `<template>` `<script>` `<style>` to decompose and string processing such as path correction and CSS scoping.
+* SFC parts `<template>` `<script>` `<style>` to decompose and string processing such as relative path fix and CSS scoping.
 * @example
 * ```ts
 * const part = parseComponent("<template>...</template>", "./component.vue");
