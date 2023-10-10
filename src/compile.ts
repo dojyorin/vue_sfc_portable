@@ -1,9 +1,4 @@
-/// <reference no-default-lib="true"/>
-/// <reference lib="esnext"/>
-/// <reference lib="dom"/>
-/// <reference lib="dom.iterable"/>
-
-import {type Component, minify, base64DataURL, utfEncode, pad0} from "../deps.ts";
+import {type Component, minify, b64DataURL, u8Encode, pad0} from "../deps.ts";
 
 function findComponent<T extends typeof HTMLElement>(elements:Element[], type:T){
     return <InstanceType<T> | undefined>elements.find(e => e instanceof type);
@@ -19,7 +14,7 @@ export interface SFCPart{
 }
 
 /**
-* SFC parts `<template>` `<script>` `<style>` to decompose and string processing such as path correction and CSS scoping.
+* SFC parts `<template>` `<script>` `<style>` to decompose and string processing such as relative path fix and CSS scoping.
 * @example
 * ```ts
 * const part = parseComponent("<template>...</template>", "./component.vue");
@@ -94,7 +89,7 @@ export async function generateComponent({html, js, css}:SFCPart):Promise<Compone
     }
 
     const {code} = await minify(js ?? "");
-    const {default: component} = <{default: Component}>await import(base64DataURL(utfEncode(code ?? ""), "text/javascript"));
+    const {default: component} = <{default: Component}>await import(b64DataURL(u8Encode(code ?? ""), "text/javascript"));
 
     return {
         template: html,
