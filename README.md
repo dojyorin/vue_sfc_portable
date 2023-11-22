@@ -1,4 +1,5 @@
 # **Vue SFC Portable**
+![actions:test](https://github.com/dojyorin/vue_sfc_portable/actions/workflows/test.yaml/badge.svg)
 ![actions:release](https://github.com/dojyorin/vue_sfc_portable/actions/workflows/release.yaml/badge.svg)
 ![shields:license](https://img.shields.io/github/license/dojyorin/vue_sfc_portable)
 ![shields:release](https://img.shields.io/github/release/dojyorin/vue_sfc_portable)
