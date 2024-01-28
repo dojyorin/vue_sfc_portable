@@ -8,9 +8,9 @@ function findComponent<T extends typeof HTMLElement>(elements:Element[], type:T)
 * Contents of SFC parts.
 */
 export interface SFCPart{
-    html: string;
-    js?: string;
-    css?: string;
+    template: string;
+    script?: string;
+    style?: string;
 }
 
 /**
@@ -67,9 +67,9 @@ export function parseComponent(sfc:string, path?:string):SFCPart{
     }
 
     return {
-        html: template.innerHTML,
-        js: script?.innerHTML,
-        css: style?.innerHTML
+        template: template.innerHTML,
+        script: script?.innerHTML,
+        style: style?.innerHTML
     };
 }
 
@@ -81,18 +81,18 @@ export function parseComponent(sfc:string, path?:string):SFCPart{
 * const component = await generateComponent(part);
 * ```
 */
-export async function generateComponent({html, js, css}:SFCPart):Promise<Component>{
-    if(css){
-        const style = document.createElement("style");
-        style.innerHTML = css;
-        document.head.appendChild(style);
+export async function generateComponent({template, script, style}:SFCPart):Promise<Component>{
+    if(style){
+        const css = document.createElement("style");
+        css.innerHTML = style;
+        document.head.appendChild(css);
     }
 
-    const {code} = await minify(js ?? "");
+    const {code} = await minify(script ?? "");
     const {default: component} = <{default: Component}>await import(b64DataURL(u8Encode(code ?? ""), "text/javascript"));
 
     return {
-        template: html,
+        template: template,
         ...component
     };
 }
