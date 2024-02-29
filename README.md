@@ -11,12 +11,15 @@ Provide minimal features for compiling SFC in browser.
 
 Compatible features with [@vue/compiler-sfc](https://www.npmjs.com/package/@vue/compiler-sfc):
 
-- Pure HTML/JS/CSS
-- `<style scoped>` *1
+- `<template>`
+- `<script>`
+    - `lang="ts"`
+- `<style>`
+    - `scoped` *1
+    - `lang="scss"`
 
 Incompatible features:
 
-- `lang` attribute (Pug, TypeScript, SCSS, ...)
 - `src` attribute
 - `<script setup>`
 - `<style module>`
